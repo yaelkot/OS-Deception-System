@@ -7,6 +7,7 @@ from sklearn.metrics import classification_report, confusion_matrix
 from sklearn.neural_network import MLPClassifier
 from sklearn.svm import SVC
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.naive_bayes import GaussianNB
 import os
 import joblib
 import numpy as np
@@ -70,17 +71,12 @@ class ClassifierModel:
         print("************************* Nueral Network Classifier ************************* \n")
         print('Classification Report: ')
         print(classification_report(self.y_test, y_pred), '\n')
-        # print('Confusion Matrix: ')
-        # print(confusion_matrix(self.y_test, y_pred), '\n')
         print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
 
-        self.classification_report_plot(classification_report(self.y_test, y_pred, output_dict=True), "ANN")
+        # self.classification_report_plot(classification_report(self.y_test, y_pred, output_dict=True), "ANN")
 
-        # if len(self.X_train[0]) == 2:
-        #     self.classification_view(self.X_train, self.y_train, ANN_Classifier)
-
-    def SVM(self, kernel_type):
-        SVM_Classifier = SVC(kernel=kernel_type)
+    def SVM(self, kernel_type = "linear"):
+        SVM_Classifier = SVC()
         SVM_Classifier.fit(self.X_train, self.y_train)
         y_pred = SVM_Classifier.predict(self.X_test)
 
@@ -88,14 +84,9 @@ class ClassifierModel:
         print("*************************Support Vector Classifier************************* \n")
         print('Classification Report: ')
         print(classification_report(self.y_test, y_pred), '\n')
-        # print('Confusion Matrix: ')
-        # print(confusion_matrix(self.y_test, y_pred), '\n')
         print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
 
         # self.classification_report_plot(classification_report(self.y_test, y_pred), "SVC" + kernel_type)
-
-        # if len(self.X_train[0]) == 2:
-        #     self.classification_view(self.X_train, self.y_train, SVM_Classifier)
 
     def RF(self):
         RF_Classifier = RandomForestClassifier(n_estimators=10, criterion='entropy')
@@ -108,11 +99,34 @@ class ClassifierModel:
         print('Classification Report: ')
         p = classification_report(self.y_test, y_pred)
         print(p, '\n')
-        # print('Confusion Matrix: ')
-        # print(confusion_matrix(self.y_test, y_pred), '\n')
         print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
-        self.classification_report_plot(classification_report(self.y_test, y_pred, output_dict=True), "RF")
+        # self.classification_report_plot(classification_report(self.y_test, y_pred, output_dict=True), "RF")
 
+    def NB(self):
+        NB_Classifier = GaussianNB()
+        NB_Classifier.fit(self.X_train, self.y_train)
+        # joblib.dump(nb_classifier, "model/nb.sav")
+        y_pred = NB_Classifier.predict(self.X_test)
 
-        # if len(self.X_train[0]) == 2:
-        #     self.classification_view(self.X_train, self.y_train, RF_Classifier)
+        print("\n")
+        print("************************* Naive Bayes Classifier *************************\n")
+        print('Classification Report: ')
+        print(classification_report(self.y_test, y_pred), '\n')
+        print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
+
+        # self.classification_report_plot(classification_report(self.y_test, y_pred, output_dict=True), "NB")
+
+    def KNN(self):
+        from sklearn.neighbors import KNeighborsClassifier
+        KNN_Classifier = KNeighborsClassifier()
+        KNN_Classifier.fit(self.X_train, self.y_train)
+        # joblib.dump(knn_classifier, "model/knn.sav")
+        y_pred = KNN_Classifier.predict(self.X_test)
+
+        print("\n")
+        print("************************* K-Neighbors Classifier *************************\n")
+        print('Classification Report: ')
+        print(classification_report(self.y_test, y_pred), '\n')
+        print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
+
+        # self.classification_report_plot(classification_report(self.y_test, y_pred,output_dict=True), "KNN")
