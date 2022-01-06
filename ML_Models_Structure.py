@@ -53,7 +53,7 @@ class ClassifierModel:
 
         fig = plt.figure(figsize=(16, 10))
         sns.set(font_scale=4)
-        sns.heatmap(pd.DataFrame(clf_report).iloc[:-1, :].T, annot=True, cmap="Reds")
+        sns.heatmap(pd.DataFrame(clf_report).iloc[:-1, :].T, annot=True, cmap="Blues")
         fig.savefig(out_file_name, bbox_inches="tight")
 
 
@@ -62,7 +62,7 @@ class ClassifierModel:
     # ****************** MODELS: ************************************
 
     def ANN(self):
-        ANN_Classifier = MLPClassifier(solver='lbfgs', alpha=1e-5,hidden_layer_sizes=(5, 2), random_state=1)
+        ANN_Classifier = MLPClassifier(solver='lbfgs', alpha=1e-6, hidden_layer_sizes=(7,5), random_state=1)
         ANN_Classifier.fit(self.X_train,self.y_train)
         y_pred = ANN_Classifier.predict(self.X_test)
 
@@ -74,7 +74,7 @@ class ClassifierModel:
         # print(confusion_matrix(self.y_test, y_pred), '\n')
         print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
 
-        # self.classification_report_plot(classification_report(self.y_test, y_pred), "ANN")
+        self.classification_report_plot(classification_report(self.y_test, y_pred, output_dict=True), "ANN")
 
         # if len(self.X_train[0]) == 2:
         #     self.classification_view(self.X_train, self.y_train, ANN_Classifier)
@@ -111,7 +111,8 @@ class ClassifierModel:
         # print('Confusion Matrix: ')
         # print(confusion_matrix(self.y_test, y_pred), '\n')
         print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
-        self.classification_report_plot(clf_report=classification_report(self.y_test, y_pred, output_dict=True),filename= "RF")
+        self.classification_report_plot(classification_report(self.y_test, y_pred, output_dict=True), "RF")
+
 
         # if len(self.X_train[0]) == 2:
         #     self.classification_view(self.X_train, self.y_train, RF_Classifier)
