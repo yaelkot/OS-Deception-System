@@ -73,7 +73,7 @@ class ClassifierModel:
         print(classification_report(self.y_test, y_pred), '\n')
         print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
 
-        # self.classification_report_plot(classification_report(self.y_test, y_pred, output_dict=True), "ANN")
+        self.classification_report_plot(classification_report(self.y_test, y_pred, output_dict=True), "ANN")
 
     def SVM(self, kernel_type = "linear"):
         SVM_Classifier = SVC()
@@ -86,7 +86,7 @@ class ClassifierModel:
         print(classification_report(self.y_test, y_pred), '\n')
         print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
 
-        # self.classification_report_plot(classification_report(self.y_test, y_pred), "SVC" + kernel_type)
+        self.classification_report_plot(classification_report(self.y_test, y_pred), "SVC" + kernel_type)
 
     def RF(self):
         RF_Classifier = RandomForestClassifier(n_estimators=10, criterion='entropy')
@@ -100,7 +100,7 @@ class ClassifierModel:
         p = classification_report(self.y_test, y_pred)
         print(p, '\n')
         print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
-        # self.classification_report_plot(classification_report(self.y_test, y_pred, output_dict=True), "RF")
+        self.classification_report_plot(classification_report(self.y_test, y_pred, output_dict=True), "RF")
 
     def NB(self):
         NB_Classifier = GaussianNB()
@@ -114,7 +114,7 @@ class ClassifierModel:
         print(classification_report(self.y_test, y_pred), '\n')
         print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
 
-        # self.classification_report_plot(classification_report(self.y_test, y_pred, output_dict=True), "NB")
+        self.classification_report_plot(classification_report(self.y_test, y_pred, output_dict=True), "NB")
 
     def KNN(self):
         from sklearn.neighbors import KNeighborsClassifier
@@ -129,4 +129,4 @@ class ClassifierModel:
         print(classification_report(self.y_test, y_pred), '\n')
         print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
 
-        # self.classification_report_plot(classification_report(self.y_test, y_pred,output_dict=True), "KNN")
+        self.classification_report_plot(classification_report(self.y_test, y_pred,output_dict=True), "KNN")
