@@ -104,30 +104,31 @@ def option_check():
 
 if __name__ == "__main__":
 
-    args = option_check()
-    filename = args[0]
-    df = pd.read_csv(filename)
-    processed_df = data_preprocess(df)
-    labeled_df = add_label(processed_df, ip_dict)
+    # args = option_check()
+    # filename = args[0]
+    filename = "dataset\\labeled_dataset_r1.csv"
+    # df = pd.read_csv(filename)
+    # processed_df = data_preprocess(df)
+    # labeled_df = add_label(processed_df, ip_dict)
+    #
+    # print("Total number of packets: ", len(labeled_df))
+    # print(labeled_df)
+    # labeled_df.to_csv("dataset\\labeled_dataset_r1.csv", encoding='utf-8', index=False)
 
-    print("Total number of packets: ", len(labeled_df))
-    print(labeled_df)
-    labeled_df.to_csv("C:\\Users\\ADMIN\\Documents\\csvsForProj\\OS_fingerprinting_using-ML-master\\dataset\\labeled_dataset_r1.csv", encoding='utf-8', index=False)
+    filename = "dataset\\labeled_dataset_r1.csv"
+    labeled_df = pd.read_csv(filename)
 
     # fingerprinting with classification
 
-    x_iloc_list = list(map(int, args[1].split(',')))
-    y_iloc = int(args[2])
-    testSize = float(args[3])
-    
-    X_train, X_test, y_train, y_test = preprocess(labeled_df, x_iloc_list, y_iloc, testSize)
-    model = classification(X_train, X_test, y_train, y_test)
-    
-    model.LR()
-    model.KNN()
+    # x_iloc_list = ['ip.len', 'tcp.window_size',
+    #          'tcp.ack', 'tcp.seq', 'tcp.len', 'tcp.stream', 'tcp.analysis.ack_rtt',
+    #          'frame.time_relative', 'tcp.time_relative']
+    x_iloc_list = [2,7,8,9,10,11,14,15,17]
+    y_iloc = 19
+    testSize = float(0.2)
+    model = ClassifierModel(labeled_df, x_iloc_list, y_iloc, testSize)
+
+    model.ANN()
     model.SVM('linear')
-    model.SVM('rbf')
-    model.NB()
-    model.DT()
     model.RF()
 
