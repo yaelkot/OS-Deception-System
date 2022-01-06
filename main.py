@@ -7,7 +7,7 @@
 
 import pandas as pd
 import sys
-from ml_template import preprocess, classification
+from ML import preprocess, classification
 from traffic_data_preprocess import data_preprocess, add_label
 
 # known OS (source: https://www.unb.ca/cic/datasets/ids-2017.html)
