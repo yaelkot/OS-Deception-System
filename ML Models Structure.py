@@ -1,6 +1,8 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import classification_report, confusion_matrix
 from sklearn.neural_network import MLPClassifier
 from sklearn.svm import SVC
@@ -13,7 +15,17 @@ import numpy as np
 
 class ClassifierModel:
 
-    def __init__(self, X_train, X_test, y_train, y_test):
+    def __init__(self, dataset, x_iloc_list, y_iloc, testSize):
+
+        # From dataset:
+        X = dataset.iloc[:, x_iloc_list].values
+        y = dataset.iloc[:, y_iloc].values
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=testSize, random_state=0)
+
+        sc = StandardScaler()
+        X_train = sc.fit_transform(X_train)
+        X_test = sc.transform(X_test)
+
         self.X_train = X_train
         self.X_test = X_test
         self.y_train = y_train
