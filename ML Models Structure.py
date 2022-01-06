@@ -1,10 +1,12 @@
 import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.metrics import classification_report, confusion_matrix
-import joblib
+from sklearn.neural_network import MLPClassifier
+from sklearn.ensemble import RandomForestClassifier
 import os
+import joblib
+import numpy as np
 
 
 
@@ -16,10 +18,37 @@ class ClassifierModel:
         self.y_train = y_train
         self.y_test = y_test
 
+    # ****************** Scores: ************************************
 
+    def accuracy(self, confusion_matrix):
+        sum, total = 0, 0
+        for i in range(len(confusion_matrix)):
+            for j in range(len(confusion_matrix[0])):
+                if i == j:
+                    sum += confusion_matrix[i, j]
+                total += confusion_matrix[i, j]
+        return sum/total
+
+
+    # TODO: change the function
+    def classification_report_plot(self, clf_report, filename):
+        folder = "clf_plots"
+        if not os.path.isdir(folder):
+            os.mkdir(folder)
+
+        out_file_name = folder + "/" + filename + ".png"
+
+        fig = plt.figure(figsize=(16, 10))
+        sns.set(font_scale=4)
+        sns.heatmap(pd.DataFrame(clf_report).iloc[:-1, :].T, annot=True, cmap="Greens")
+        fig.savefig(out_file_name, bbox_inches="tight")
+
+
+
+
+    # ****************** MODELS: ************************************
 
     def ANN(self):
-      from sklearn.neural_network import MLPClassifier
       ANN_Classifier = MLPClassifier(solver='lbfgs', alpha=1e-5,hidden_layer_sizes=(5, 2), random_state=1)
       ANN_Classifier.fit(self.X,self.y)
       y_pred = ANN_Classifier.predict(self.X_test)
@@ -32,8 +61,7 @@ class ClassifierModel:
       print(confusion_matrix(self.y_test, y_pred), '\n')
       print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
 
-      self.classification_report_plot(classification_report(self.y_test, y_pred, \
-                                                            output_dict=True), "RF")
+      self.classification_report_plot(classification_report(self.y_test, y_pred,output_dict=True), "RF")
 
       if len(self.X_train[0]) == 2:
           self.classification_view(self.X_train, self.y_train, ANN_Classifier)
@@ -52,8 +80,25 @@ class ClassifierModel:
         print(confusion_matrix(self.y_test, y_pred), '\n')
         print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
 
-        self.classification_report_plot(classification_report(self.y_test, y_pred, \
-                                                              output_dict=True), "SVC" + kernel_type)
+        self.classification_report_plot(classification_report(self.y_test, y_pred,output_dict=True), "SVC" + kernel_type)
 
         if len(self.X_train[0]) == 2:
             self.classification_view(self.X_train, self.y_train, SVM_Classifier)
+
+    def RF(self):
+        RF_Classifier = RandomForestClassifier(n_estimators=10, criterion='entropy')
+        RF_Classifier.fit(self.X_train, self.y_train)
+        # joblib.dump(rf_classifier, "model/rf.sav")
+        y_pred = RF_Classifier.predict(self.X_test)
+
+        print("\n")
+        print("************************* Random Forest Classifier ************************* \n")
+        print('Classification Report: ')
+        print(classification_report(self.y_test, y_pred), '\n')
+        print('Confusion Matrix: ')
+        print(confusion_matrix(self.y_test, y_pred), '\n')
+        print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
+        self.classification_report_plot(classification_report(self.y_test, y_pred,output_dict=True), "RF")
+
+        if len(self.X_train[0]) == 2:
+            self.classification_view(self.X_train, self.y_train, RF_Classifier)
