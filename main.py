@@ -129,6 +129,6 @@ if __name__ == "__main__":
     model = ClassifierModel(labeled_df, x_iloc_list, y_iloc, testSize)
 
     model.ANN()
-    model.SVM('linear')
+    # model.SVM('linear')
     model.RF()
 

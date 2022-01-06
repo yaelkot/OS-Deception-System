@@ -45,7 +45,7 @@ class ClassifierModel:
 
     # TODO: change the function
     def classification_report_plot(self, clf_report, filename):
-        folder = "clf_plots"
+        folder = "clf_plots_new"
         if not os.path.isdir(folder):
             os.mkdir(folder)
 
@@ -53,7 +53,7 @@ class ClassifierModel:
 
         fig = plt.figure(figsize=(16, 10))
         sns.set(font_scale=4)
-        sns.heatmap(pd.DataFrame(clf_report).iloc[:-1, :].T, annot=True, cmap="Greens")
+        sns.heatmap(pd.DataFrame(clf_report).iloc[:-1, :].T, annot=True, cmap="Reds")
         fig.savefig(out_file_name, bbox_inches="tight")
 
 
@@ -70,14 +70,14 @@ class ClassifierModel:
         print("************************* Nueral Network Classifier ************************* \n")
         print('Classification Report: ')
         print(classification_report(self.y_test, y_pred), '\n')
-        print('Confusion Matrix: ')
-        print(confusion_matrix(self.y_test, y_pred), '\n')
+        # print('Confusion Matrix: ')
+        # print(confusion_matrix(self.y_test, y_pred), '\n')
         print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
 
         # self.classification_report_plot(classification_report(self.y_test, y_pred), "ANN")
 
-        if len(self.X_train[0]) == 2:
-            self.classification_view(self.X_train, self.y_train, ANN_Classifier)
+        # if len(self.X_train[0]) == 2:
+        #     self.classification_view(self.X_train, self.y_train, ANN_Classifier)
 
     def SVM(self, kernel_type):
         SVM_Classifier = SVC(kernel=kernel_type)
@@ -88,14 +88,14 @@ class ClassifierModel:
         print("*************************Support Vector Classifier************************* \n")
         print('Classification Report: ')
         print(classification_report(self.y_test, y_pred), '\n')
-        print('Confusion Matrix: ')
-        print(confusion_matrix(self.y_test, y_pred), '\n')
+        # print('Confusion Matrix: ')
+        # print(confusion_matrix(self.y_test, y_pred), '\n')
         print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
 
         # self.classification_report_plot(classification_report(self.y_test, y_pred), "SVC" + kernel_type)
 
-        if len(self.X_train[0]) == 2:
-            self.classification_view(self.X_train, self.y_train, SVM_Classifier)
+        # if len(self.X_train[0]) == 2:
+        #     self.classification_view(self.X_train, self.y_train, SVM_Classifier)
 
     def RF(self):
         RF_Classifier = RandomForestClassifier(n_estimators=10, criterion='entropy')
@@ -106,11 +106,12 @@ class ClassifierModel:
         print("\n")
         print("************************* Random Forest Classifier ************************* \n")
         print('Classification Report: ')
-        print(classification_report(self.y_test, y_pred), '\n')
-        print('Confusion Matrix: ')
-        print(confusion_matrix(self.y_test, y_pred), '\n')
+        p = classification_report(self.y_test, y_pred)
+        print(p, '\n')
+        # print('Confusion Matrix: ')
+        # print(confusion_matrix(self.y_test, y_pred), '\n')
         print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
-        # self.classification_report_plot(classification_report(self.y_test, y_pred), "RF")
+        self.classification_report_plot(clf_report=classification_report(self.y_test, y_pred, output_dict=True),filename= "RF")
 
-        if len(self.X_train[0]) == 2:
-            self.classification_view(self.X_train, self.y_train, RF_Classifier)
+        # if len(self.X_train[0]) == 2:
+        #     self.classification_view(self.X_train, self.y_train, RF_Classifier)
