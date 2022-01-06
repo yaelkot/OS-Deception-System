@@ -105,14 +105,16 @@ def option_check():
 if __name__ == "__main__":
 
     args = option_check()
-    filename = args[0]
-    df = pd.read_csv(filename)
-    processed_df = data_preprocess(df)
-    labeled_df = add_label(processed_df, ip_dict)
+    # filename = args[0]
+    # df = pd.read_csv(filename)
+    # processed_df = data_preprocess(df)
+    # labeled_df = add_label(processed_df, ip_dict)
+    #
+    # print("Total number of packets: ", len(labeled_df))
+    # print(labeled_df)
+    # labeled_df.to_csv("C:\\Users\\ADMIN\\Documents\\csvsForProj\\OS_fingerprinting_using-ML-master\\dataset\\labeled_dataset_r1.csv", encoding='utf-8', index=False)
 
-    print("Total number of packets: ", len(labeled_df))
-    print(labeled_df)
-    labeled_df.to_csv("C:\\Users\\ADMIN\\Documents\\csvsForProj\\OS_fingerprinting_using-ML-master\\dataset\\labeled_dataset_r1.csv", encoding='utf-8', index=False)
+    labeled_df = pd.read_csv("C:\\Users\\ADMIN\\Documents\\csvsForProj\\OS_fingerprinting_using-ML-master\\dataset\\labeled_dataset_r1.csv")
 
     # fingerprinting with classification
 
@@ -125,8 +127,8 @@ if __name__ == "__main__":
     
     model.LR()
     model.KNN()
-    model.SVM('linear')
-    model.SVM('rbf')
+    # model.SVM('linear')
+    # model.SVM('rbf')
     model.NB()
     model.DT()
     model.RF()
