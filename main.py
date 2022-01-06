@@ -104,7 +104,6 @@ def option_check():
 
 if __name__ == "__main__":
 
-
     # args = option_check()
     # filename = args[0]
     filename = "dataset\\labeled_dataset_r1.csv"
@@ -130,6 +129,6 @@ if __name__ == "__main__":
     model = ClassifierModel(labeled_df, x_iloc_list, y_iloc, testSize)
 
     model.ANN()
-    model.SVM('linear')
+    # model.SVM('linear')
     model.RF()
 
