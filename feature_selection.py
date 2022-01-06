@@ -110,7 +110,7 @@ def extra_tree_classifier(df, names):
     
     importance = {}
 
-    for i,j in zip(names, list(model.feature_importances_)):
+    for i, j in zip(names, list(model.feature_importances_)):
         importance[i] = j
 
     feature_importance = dict(sorted(importance.items(), key=lambda item: item[1], reverse=True))
@@ -142,6 +142,6 @@ if __name__ == "__main__":
     print("")
     univariate_stat(df, names, no_of_best)
     print("")
-    # recursive_feature_eliminate(df, names, no_of_best)
-    # print("")
-    # extra_tree_classifier(df, names)
+    recursive_feature_eliminate(df, names, no_of_best)
+    print("")
+    extra_tree_classifier(df, names)
