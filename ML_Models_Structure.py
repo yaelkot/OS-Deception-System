@@ -63,7 +63,7 @@ class ClassifierModel:
 
     def ANN(self):
         ANN_Classifier = MLPClassifier(solver='lbfgs', alpha=1e-5,hidden_layer_sizes=(5, 2), random_state=1)
-        ANN_Classifier.fit(self.X,self.y)
+        ANN_Classifier.fit(self.X_train,self.y_train)
         y_pred = ANN_Classifier.predict(self.X_test)
 
         print("\n")
@@ -74,7 +74,7 @@ class ClassifierModel:
         print(confusion_matrix(self.y_test, y_pred), '\n')
         print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
 
-        self.classification_report_plot(classification_report(self.y_test, y_pred,output_dict=True), "RF")
+        # self.classification_report_plot(classification_report(self.y_test, y_pred), "ANN")
 
         if len(self.X_train[0]) == 2:
             self.classification_view(self.X_train, self.y_train, ANN_Classifier)
@@ -92,7 +92,7 @@ class ClassifierModel:
         print(confusion_matrix(self.y_test, y_pred), '\n')
         print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
 
-        self.classification_report_plot(classification_report(self.y_test, y_pred,output_dict=True), "SVC" + kernel_type)
+        # self.classification_report_plot(classification_report(self.y_test, y_pred), "SVC" + kernel_type)
 
         if len(self.X_train[0]) == 2:
             self.classification_view(self.X_train, self.y_train, SVM_Classifier)
@@ -110,7 +110,7 @@ class ClassifierModel:
         print('Confusion Matrix: ')
         print(confusion_matrix(self.y_test, y_pred), '\n')
         print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
-        self.classification_report_plot(classification_report(self.y_test, y_pred,output_dict=True), "RF")
+        # self.classification_report_plot(classification_report(self.y_test, y_pred), "RF")
 
         if len(self.X_train[0]) == 2:
             self.classification_view(self.X_train, self.y_train, RF_Classifier)
