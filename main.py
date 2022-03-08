@@ -123,7 +123,7 @@ if __name__ == "__main__":
     # x_iloc_list = ['ip.len', 'tcp.window_size',
     #          'tcp.ack', 'tcp.seq', 'tcp.len', 'tcp.stream', 'tcp.analysis.ack_rtt',
     #          'frame.time_relative', 'tcp.time_relative']
-    x_iloc_list = [2,7,8,9,10,11,14,15,17]
+    x_iloc_list = [2, 7, 8, 9, 10, 11, 14, 15, 17]
     y_iloc = 19
     testSize = float(0.25)
     model = ClassifierModel(labeled_df, x_iloc_list, y_iloc, testSize)
