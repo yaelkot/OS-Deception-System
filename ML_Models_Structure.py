@@ -10,7 +10,8 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.naive_bayes import GaussianNB
 import os
 import joblib
-import numpy as np
+from os import listdir
+from os.path import isfile
 
 
 
@@ -46,7 +47,7 @@ class ClassifierModel:
 
     # TODO: change the function
     def classification_report_plot(self, clf_report, filename):
-        folder = "clf_plots_new"
+        folder = "clf_plots_monday"
         if not os.path.isdir(folder):
             os.mkdir(folder)
 
@@ -57,14 +58,13 @@ class ClassifierModel:
         sns.heatmap(pd.DataFrame(clf_report).iloc[:-1, :].T, annot=True, cmap="Blues")
         fig.savefig(out_file_name, bbox_inches="tight")
 
-
-
-
     # ****************** MODELS: ************************************
 
     def ANN(self):
-        ANN_Classifier = MLPClassifier(solver='lbfgs', alpha=1e-6, hidden_layer_sizes=(7,5), random_state=1)
-        ANN_Classifier.fit(self.X_train,self.y_train)
+
+        ANN_Classifier = MLPClassifier(solver='lbfgs', alpha=1e-6, hidden_layer_sizes=(7, 5), random_state=1)
+        ANN_Classifier.fit(self.X_train, self.y_train)
+        joblib.dump(ANN_Classifier, "model/ann.sav")
         y_pred = ANN_Classifier.predict(self.X_test)
 
         print("\n")
@@ -86,7 +86,7 @@ class ClassifierModel:
         print(classification_report(self.y_test, y_pred), '\n')
         print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
 
-        self.classification_report_plot(classification_report(self.y_test, y_pred), "SVC" + kernel_type)
+        self.classification_report_plot(classification_report(self.y_test, y_pred, output_dict=True), "SVM" + kernel_type)
 
     def RF(self):
         RF_Classifier = RandomForestClassifier(n_estimators=10, criterion='entropy')
@@ -130,3 +130,20 @@ class ClassifierModel:
         print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
 
         self.classification_report_plot(classification_report(self.y_test, y_pred,output_dict=True), "KNN")
+
+    def run_models(self, dataset, x_iloc_list, y_iloc):
+
+        X = dataset.iloc[:, x_iloc_list].values
+        Y = ['Win 10' in range(dataset.shape[0])]
+        models = [f for f in listdir("model") if isfile("model/" + f)]
+
+        for filename in models:
+            print(filename)
+            loaded_model = joblib.load(filename)
+            result = loaded_model.score(X, Y)
+            print(result)
+
+
+
+
+

@@ -106,14 +106,17 @@ if __name__ == "__main__":
 
     # args = option_check()
     # filename = args[0]
-    filename = "dataset\\labeled_dataset_r1.csv"
+
+    # filename = "dataset\\r1.csv"
     # df = pd.read_csv(filename)
     # processed_df = data_preprocess(df)
     # labeled_df = add_label(processed_df, ip_dict)
     #
     # print("Total number of packets: ", len(labeled_df))
     # print(labeled_df)
+    #
     # labeled_df.to_csv("dataset\\labeled_dataset_r1.csv", encoding='utf-8', index=False)
+
 
     filename = "dataset\\labeled_dataset_r1.csv"
     labeled_df = pd.read_csv(filename)
@@ -125,12 +128,20 @@ if __name__ == "__main__":
     #          'frame.time_relative', 'tcp.time_relative']
     x_iloc_list = [2, 7, 8, 9, 10, 11, 14, 15, 17]
     y_iloc = 19
-    testSize = float(0.25)
+
+    testSize = float(0.2)
     model = ClassifierModel(labeled_df, x_iloc_list, y_iloc, testSize)
 
+    filename = "dataset\\lev_comp.csv"
+    windows10_traffic = pd.read_csv(filename)
+
+    # model.KNN()
+    # model.SVM('linear')
+    # model.SVM('rbf')
+    # model.NB()
+    # model.RF()
     model.ANN()
-    model.RF()
-    model.KNN()
-    model.NB()
-    model.SVM('linear')
+    # model.run_models(windows10_traffic, x_iloc_list, y_iloc)
+
+
 
