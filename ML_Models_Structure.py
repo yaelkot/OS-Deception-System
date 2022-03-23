@@ -78,6 +78,7 @@ class ClassifierModel:
     def SVM(self, kernel_type = "linear"):
         SVM_Classifier = SVC()
         SVM_Classifier.fit(self.X_train, self.y_train)
+        joblib.dump(SVM_Classifier, "model/svm" + kernel_type + '.sav')
         y_pred = SVM_Classifier.predict(self.X_test)
 
         print("\n")
@@ -91,7 +92,7 @@ class ClassifierModel:
     def RF(self):
         RF_Classifier = RandomForestClassifier(n_estimators=10, criterion='entropy')
         RF_Classifier.fit(self.X_train, self.y_train)
-        # joblib.dump(rf_classifier, "model/rf.sav")
+        joblib.dump(RF_Classifier, "model/rf.sav")
         y_pred = RF_Classifier.predict(self.X_test)
 
         print("\n")
@@ -105,7 +106,7 @@ class ClassifierModel:
     def NB(self):
         NB_Classifier = GaussianNB()
         NB_Classifier.fit(self.X_train, self.y_train)
-        # joblib.dump(nb_classifier, "model/nb.sav")
+        joblib.dump(NB_Classifier, "model/nb.sav")
         y_pred = NB_Classifier.predict(self.X_test)
 
         print("\n")
@@ -131,11 +132,11 @@ class ClassifierModel:
 
         self.classification_report_plot(classification_report(self.y_test, y_pred,output_dict=True), "KNN")
 
-    def run_models(self, dataset, x_iloc_list, y_iloc):
+    def run_models(self, dataset, x_iloc_list):
 
         X = dataset.iloc[:, x_iloc_list].values
-        Y = ['Win 10' in range(dataset.shape[0])]
-        models = [f for f in listdir("model") if isfile("model/" + f)]
+        Y = ['Win 10' for i in range(dataset.shape[0])]
+        models = ["model/" + f for f in listdir("model") if isfile("model/" + f)]
 
         for filename in models:
             print(filename)
