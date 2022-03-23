@@ -121,23 +121,18 @@ def extra_tree_classifier(df, names):
 
     
 if __name__ == "__main__":
-    filename = "./dataset/labeled_dataset_r1.csv"
+    filename = "./dataset/labeled_monday1.csv"
     # filename = input("Enter the filename: ")
-    # names = ['ip.hdr_len', 'ip.flags.rb',\
-    #      'ip.flags.df', 'ip.flags.mf', 'ip.frag_offset', 'ip.ttl',\
-    #      'ip.len', 'tcp.seq', 'tcp.ack', 'tcp.len', \
-    #      'tcp.hdr_len', 'tcp.flags.fin', 'tcp.flags.syn', 'tcp.flags.reset',\
-    #      'tcp.flags.push', 'tcp.flags.ack', 'tcp.flags.urg', 'tcp.flags.cwr', 'tcp.window_size',\
-    #      'tcp.urgent_pointer', 'os']
-    # names = ['ip.len', 'ip.flags.df', 'ip.flags.mf', 'ip.ttl', 'tcp.window_size',
-    #          'tcp.ack', 'tcp.seq', 'tcp.len', 'tcp.stream', 'tcp.urgent_pointer', 'tcp.analysis.ack_rtt',
-    #          'frame.time_relative', 'tcp.time_relative', 'tcp.time_delta', 'os']
-    names = ['ip.len', 'tcp.window_size',
-             'tcp.ack', 'tcp.seq', 'tcp.len', 'tcp.stream', 'tcp.analysis.ack_rtt',
-             'frame.time_relative', 'tcp.time_relative', 'os']
+    names = ['ip.hdr_len', 'ip.flags.rb',
+             'ip.flags.df', 'ip.flags.mf', 'ip.frag_offset', 'ip.ttl',
+             'ip.len', 'tcp.seq', 'tcp.ack', 'tcp.len',
+             'tcp.hdr_len', 'tcp.flags.fin', 'tcp.flags.syn', 'tcp.flags.reset',
+             'tcp.flags.push', 'tcp.flags.ack', 'tcp.flags.urg', 'tcp.flags.cwr', 'tcp.window_size',
+             'tcp.urgent_pointer', 'os']
+
     df = read_csv(filename, usecols=names)
     # no_of_best = int(input("Enter the no. of best features: "))
-    no_of_best = 9
+    no_of_best = 10
     
     print("")
     univariate_stat(df, names, no_of_best)

@@ -2,18 +2,12 @@ import pandas as pd
 
 
 def data_preprocess(init_df):
-
-    # df = init_df.drop(columns=['ip.tos', 'tcp.options.mss_val'])
-
     # df = init_df.loc[:, ['ip.src', 'ip.dst', 'ip.len', 'ip.flags.df', 'ip.flags.mf', 'ip.ttl', 'ip.proto',
     #                      'tcp.window_size', 'tcp.ack', 'tcp.seq', 'tcp.len', 'tcp.stream', 'tcp.urgent_pointer',
     #                      'tcp.flags', 'tcp.analysis.ack_rtt', 'frame.time_relative', 'frame.time_delta',
     #                      'tcp.time_relative', 'tcp.time_delta']]
 
-    df = init_df.loc[:, ['ip.len', 'tcp.window_size',
-                         'tcp.ack', 'tcp.seq', 'tcp.len', 'tcp.stream', 'tcp.analysis.ack_rtt',
-                         'frame.time_relative', 'tcp.time_relative', 'os']]
-
+    df = init_df.drop(columns=['ip.tos', 'tcp.options.mss_val'])
     final_df = df.dropna()
     return final_df
 
