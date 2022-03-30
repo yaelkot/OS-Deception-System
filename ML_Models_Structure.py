@@ -132,10 +132,10 @@ class ClassifierModel:
 
         self.classification_report_plot(classification_report(self.y_test, y_pred,output_dict=True), "KNN")
 
-    def run_models(self, dataset, x_iloc_list):
+    def run_models(self, dataset, x_iloc_list, os_name):
 
         X = dataset.iloc[:, x_iloc_list].values
-        Y = ['Win 10' for i in range(dataset.shape[0])]
+        Y = [os_name for _ in range(dataset.shape[0])]
         models = ["model/" + f for f in listdir("model") if isfile("model/" + f)]
 
         for filename in models:
