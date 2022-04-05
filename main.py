@@ -131,22 +131,20 @@ if __name__ == "__main__":
     testSize = float(0.2)
     model = ClassifierModel(labeled_df, x_iloc_list, y_iloc, testSize)
 
-    filename = "dataset\\yair-mac-traffic.csv"
+    filename = "dataset\\yael-traffic.csv"
     df = pd.read_csv(filename)
     df = df.drop(columns=['ip.tos', 'tcp.options.mss_val'])
     user_traffic = df.dropna()
     x_iloc_list = [8, 13, 20, 29, 5, 23, 1, 26, 25, 17, 19]   # indexes in user's csv
 
-    """
-    model.KNN()
+    """model.KNN()
     model.SVM('linear')
     model.SVM('rbf')
     model.NB()
     model.RF()
-    model.ANN()
-    """
+    model.ANN()"""
 
-    model.run_models(user_traffic, x_iloc_list, 'macOS')
+    model.run_models(user_traffic, x_iloc_list, 'Windows')
 
 
 

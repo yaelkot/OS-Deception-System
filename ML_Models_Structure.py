@@ -67,7 +67,7 @@ class ClassifierModel:
 
         ANN_Classifier = MLPClassifier(solver='lbfgs', alpha=1e-6, hidden_layer_sizes=(7, 5), random_state=1)
         ANN_Classifier.fit(self.X_train, self.y_train)
-        # joblib.dump(ANN_Classifier, "model/ann.sav")
+        joblib.dump(ANN_Classifier, "model/ann.sav")
         y_pred = ANN_Classifier.predict(self.X_test)
 
         print("\n")
@@ -81,7 +81,7 @@ class ClassifierModel:
     def SVM(self, kernel_type = "linear"):
         SVM_Classifier = SVC()
         SVM_Classifier.fit(self.X_train, self.y_train)
-        # joblib.dump(SVM_Classifier, "model/svm" + kernel_type + '.sav')
+        joblib.dump(SVM_Classifier, "model/svm" + kernel_type + '.sav')
         y_pred = SVM_Classifier.predict(self.X_test)
 
         print("\n")
@@ -109,7 +109,7 @@ class ClassifierModel:
     def NB(self):
         NB_Classifier = GaussianNB()
         NB_Classifier.fit(self.X_train, self.y_train)
-        # joblib.dump(NB_Classifier, "model/nb.sav")
+        joblib.dump(NB_Classifier, "model/nb.sav")
         y_pred = NB_Classifier.predict(self.X_test)
 
         print("\n")
@@ -124,7 +124,7 @@ class ClassifierModel:
         from sklearn.neighbors import KNeighborsClassifier
         KNN_Classifier = KNeighborsClassifier()
         KNN_Classifier.fit(self.X_train, self.y_train)
-        # joblib.dump(knn_classifier, "model/knn.sav")
+        joblib.dump(KNN_Classifier, "model/knn.sav")
         y_pred = KNN_Classifier.predict(self.X_test)
 
         print("\n")
