@@ -1,3 +1,4 @@
+import pandas
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -8,6 +9,7 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.svm import SVC
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.naive_bayes import GaussianNB
+from sklearn.tree import DecisionTreeClassifier
 import os
 import joblib
 from os import listdir
@@ -32,6 +34,7 @@ class ClassifierModel:
         self.X_test = X_test
         self.y_train = y_train
         self.y_test = y_test
+
 
     # ****************** Scores: ************************************
 
@@ -64,7 +67,7 @@ class ClassifierModel:
 
         ANN_Classifier = MLPClassifier(solver='lbfgs', alpha=1e-6, hidden_layer_sizes=(7, 5), random_state=1)
         ANN_Classifier.fit(self.X_train, self.y_train)
-        joblib.dump(ANN_Classifier, "model/ann.sav")
+        # joblib.dump(ANN_Classifier, "model/ann.sav")
         y_pred = ANN_Classifier.predict(self.X_test)
 
         print("\n")
@@ -78,7 +81,7 @@ class ClassifierModel:
     def SVM(self, kernel_type = "linear"):
         SVM_Classifier = SVC()
         SVM_Classifier.fit(self.X_train, self.y_train)
-        joblib.dump(SVM_Classifier, "model/svm" + kernel_type + '.sav')
+        # joblib.dump(SVM_Classifier, "model/svm" + kernel_type + '.sav')
         y_pred = SVM_Classifier.predict(self.X_test)
 
         print("\n")
@@ -92,7 +95,7 @@ class ClassifierModel:
     def RF(self):
         RF_Classifier = RandomForestClassifier(n_estimators=10, criterion='entropy')
         RF_Classifier.fit(self.X_train, self.y_train)
-        joblib.dump(RF_Classifier, "model/rf.sav")
+        # joblib.dump(RF_Classifier, "model/rf.sav")
         y_pred = RF_Classifier.predict(self.X_test)
 
         print("\n")
@@ -106,7 +109,7 @@ class ClassifierModel:
     def NB(self):
         NB_Classifier = GaussianNB()
         NB_Classifier.fit(self.X_train, self.y_train)
-        joblib.dump(NB_Classifier, "model/nb.sav")
+        # joblib.dump(NB_Classifier, "model/nb.sav")
         y_pred = NB_Classifier.predict(self.X_test)
 
         print("\n")
@@ -132,19 +135,33 @@ class ClassifierModel:
 
         self.classification_report_plot(classification_report(self.y_test, y_pred,output_dict=True), "KNN")
 
+    def DT(self):
+        DT_Classifier = DecisionTreeClassifier()
+        DT_Classifier.fit(self.X_train, self.y_train)
+        joblib.dump(DT_Classifier, "model/dt.sav")
+        y_pred = DT_Classifier.predict(self.X_test)
+
+        print("\n")
+        print("************************* K-Neighbors Classifier *************************\n")
+        print('Classification Report: ')
+        print(classification_report(self.y_test, y_pred), '\n')
+        print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
+
+        self.classification_report_plot(classification_report(self.y_test, y_pred,output_dict=True), "DT")
+
     def run_models(self, dataset, x_iloc_list, os_name):
 
         X = dataset.iloc[:, x_iloc_list].values
         Y = [os_name for _ in range(dataset.shape[0])]
         models = ["model/" + f for f in listdir("model") if isfile("model/" + f)]
-
         for filename in models:
             print(filename)
             loaded_model = joblib.load(filename)
             result = loaded_model.score(X, Y)
             print(result)
-
-
+            pred_cols = pd.Series(loaded_model.predict(X))
+            print(set(pred_cols))
+            print("******************\n")
 
 
 
