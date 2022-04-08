@@ -137,14 +137,15 @@ if __name__ == "__main__":
     user_traffic = df.dropna()
     x_iloc_list = [8, 13, 20, 29, 5, 23, 1, 26, 25, 17, 19]   # indexes in user's csv
 
-    """model.KNN()
+    model.KNN()
     model.SVM('linear')
     model.SVM('rbf')
     model.NB()
     model.RF()
-    model.ANN()"""
+    model.ANN()
+    model.models_summery()
 
-    model.run_models(user_traffic, x_iloc_list, 'Windows')
+    # model.run_models(user_traffic, x_iloc_list, 'Windows')
 
 
 
