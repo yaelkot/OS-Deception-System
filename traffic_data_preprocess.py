@@ -1,10 +1,19 @@
+import numpy as np
 import pandas as pd
 
 
 def data_preprocess(init_df):
 
+    init_df['tcp.srcport'] = np.where(init_df['tcp.srcport'] > 1500, 1, 0)
+    init_df['tcp.dstport'] = np.where(init_df['tcp.dstport'] > 1500, 1, 0)
+
+    init_df['ip.dsfield'] = init_df['ip.dsfield'].apply(int, base=16)
+    init_df['tcp.flags'] = init_df['tcp.flags'].apply(int, base=16)
+    init_df['ip.flags'] = init_df['ip.flags'].apply(int, base=16)
+
     df = init_df.drop(columns=['ip.tos', 'tcp.options.mss_val'])
     final_df = df.dropna()
+
     return final_df
 
 

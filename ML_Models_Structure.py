@@ -4,7 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import classification_report, confusion_matrix
 from sklearn.neural_network import MLPClassifier
 from sklearn.svm import SVC
@@ -27,7 +27,7 @@ class ClassifierModel:
         y = dataset.iloc[:, y_iloc].values
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=testSize, random_state=0)
 
-        sc = StandardScaler()
+        sc = MinMaxScaler()
         X_train = sc.fit_transform(X_train)
         X_test = sc.transform(X_test)
 
@@ -83,7 +83,7 @@ class ClassifierModel:
         print("************************* Nueral Network Classifier ************************* \n")
         print('Classification Report: ')
         print(classification_report(self.y_test, y_pred), '\n')
-        # print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
+        print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
         num_of_folds = 5
         self.k_fold(ANN_Classifier, num_of_folds, "ANN")
 
@@ -99,7 +99,7 @@ class ClassifierModel:
         print("*************************Support Vector Classifier************************* \n")
         print('Classification Report: ')
         print(classification_report(self.y_test, y_pred), '\n')
-        # print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
+        print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
 
         num_of_folds = 5
         self.k_fold(SVM_Classifier, num_of_folds, "SVM")
@@ -109,7 +109,7 @@ class ClassifierModel:
     def RF(self):
         RF_Classifier = RandomForestClassifier(n_estimators=10, criterion='entropy')
         RF_Classifier.fit(self.X_train, self.y_train)
-        # joblib.dump(RF_Classifier, "model/rf.sav")
+        joblib.dump(RF_Classifier, "model/rf.sav")
         y_pred = RF_Classifier.predict(self.X_test)
 
         print("\n")
@@ -134,7 +134,7 @@ class ClassifierModel:
         print("************************* Naive Bayes Classifier *************************\n")
         print('Classification Report: ')
         print(classification_report(self.y_test, y_pred), '\n')
-        # print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
+        print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
 
         num_of_folds = 5
         self.k_fold(NB_Classifier, num_of_folds, "NB")
@@ -152,7 +152,7 @@ class ClassifierModel:
         print("************************* K-Neighbors Classifier *************************\n")
         print('Classification Report: ')
         print(classification_report(self.y_test, y_pred), '\n')
-        # print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
+        print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
 
         num_of_folds = 5
         self.k_fold(KNN_Classifier, num_of_folds, "KNN")
@@ -169,7 +169,7 @@ class ClassifierModel:
         print("************************* K-Neighbors Classifier *************************\n")
         print('Classification Report: ')
         print(classification_report(self.y_test, y_pred), '\n')
-        # print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
+        print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
 
         num_of_folds = 5
         self.k_fold(DT_Classifier, num_of_folds, "DT")
@@ -182,7 +182,8 @@ class ClassifierModel:
             os.mkdir(folder)
         out_file_name = folder + "/summary.png"
         accuracies = pd.DataFrame(
-            self.models_accuracy, columns=['Accuracy', 'Std'], index=['KNN', 'linearSVM', 'rbfSVM', 'NB', 'RF', 'ANN'])
+            self.models_accuracy, columns=['Accuracy', 'Std'],
+            index=['KNN', 'linearSVM', 'rbfSVM', 'NB', 'RF', 'ANN', 'DT'])
         fig = plt.figure(figsize=(16, 10))
         sns.set(font_scale=4)
         sns.heatmap(accuracies, annot=True, cmap="BuPu")
