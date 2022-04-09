@@ -166,7 +166,7 @@ class ClassifierModel:
         y_pred = DT_Classifier.predict(self.X_test)
 
         print("\n")
-        print("************************* K-Neighbors Classifier *************************\n")
+        print("************************* Decision Tree Classifier *************************\n")
         print('Classification Report: ')
         print(classification_report(self.y_test, y_pred), '\n')
         print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
