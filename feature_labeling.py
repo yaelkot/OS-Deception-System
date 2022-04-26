@@ -4,13 +4,11 @@ import pandas as pd
 
 directory = '.\\real-traffic'
 
-
 ip_dict = {
     '10.0.0.10': 'Win 10',
     '132.73.223.74': 'Win 10',
     '10.100.102.8': 'Rhel 8.5',
     '10.100.102.7': 'Ubuntu 18.04',
-    '10.0.0.7': 'ARCH',
     '192.168.1.81': 'Mac 2017',
     '192.168.1.34': 'Win 11',
     '192.168.1.105': 'Win 11',
@@ -19,10 +17,9 @@ ip_dict = {
     '192.168.1.56': 'Mac 2019',
 }
 
-def data_preprocess(init_df):
 
-    init_df.drop(columns=['ip.tos', 'tcp.options.mss_val'], inplace=True)
-    init_df.dropna(inplace=True)
+def data_preprocess(init_df):
+    init_df.dropna()
     init_df['tcp.srcport'] = np.where(init_df['tcp.srcport'] > 1024, 1, 0)
     init_df['tcp.dstport'] = np.where(init_df['tcp.dstport'] > 1024, 1, 0)
 
@@ -30,7 +27,8 @@ def data_preprocess(init_df):
     init_df['tcp.flags'] = init_df['tcp.flags'].apply(int, base=16)
     init_df['ip.flags'] = init_df['ip.flags'].apply(int, base=16)"""
 
-    return init_df
+    df = init_df.drop(columns=['ip.tos', 'tcp.options.mss_val'])
+    return df
 
 
 def add_label(df, ip_label_dict):
@@ -61,7 +59,7 @@ if __name__ == '__main__':
             processed_df = data_preprocess(df)
             labeled_df = add_label(processed_df, ip_dict)
             if not i:
-                labeled_df.to_csv('.\\labeled.csv', mode='w', index=False)
+                labeled_df.to_csv('.\\labeled.csv', mode='a+', index=False)
             else:
                 labeled_df.to_csv('.\\labeled.csv', mode='a+', header=False, index=False)
 
