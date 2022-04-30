@@ -131,7 +131,7 @@ if __name__ == "__main__":
     testSize = float(0.2)
     model = ClassifierModel(labeled_df, x_iloc_list, y_iloc, testSize)
 
-    filename = "dataset\\yair-mac-traffic.csv"
+    filename = "dataset\\labeled_monday.csv"
     df = pd.read_csv(filename)
     df = df.drop(columns=['ip.tos', 'tcp.options.mss_val'])
     user_traffic = df.dropna()
