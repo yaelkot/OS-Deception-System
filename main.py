@@ -1,4 +1,3 @@
-
 ### Example Inputs ###
 # python main.py -file thursday-100M-v2.csv -features 4,5,6,8,20,22,23,24,25,26,27,29 -label 32 -test 0.2
 # python main.py -file thursday-100M-v2.csv -features 1,5,8,13,17,18,19,20,22,23,24,25,26,29 -label 32 -test 0.2
@@ -137,16 +136,12 @@ if __name__ == "__main__":
     user_traffic = df.dropna()
     x_iloc_list = [8, 13, 20, 29, 5, 23, 1, 26, 25, 17, 19]   # indexes in user's csv
 
-    """
     model.KNN()
     model.SVM('linear')
     model.SVM('rbf')
     model.NB()
     model.RF()
     model.ANN()
-    """
-
-    model.run_models(user_traffic, x_iloc_list, 'macOS')
 
 
-
+    # model.run_models(user_traffic, x_iloc_list, 'macOS')
