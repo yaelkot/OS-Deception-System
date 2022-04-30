@@ -121,7 +121,7 @@ def extra_tree_classifier(df, names):
 
     
 if __name__ == "__main__":
-    filename = "./dataset/labeled_monday1.csv"
+    filename = "./dataset/labeled_monday.csv"
     # filename = input("Enter the filename: ")
     names = ['ip.hdr_len', 'ip.flags.rb',
              'ip.flags.df', 'ip.flags.mf', 'ip.frag_offset', 'ip.ttl',
@@ -137,6 +137,6 @@ if __name__ == "__main__":
     print("")
     univariate_stat(df, names, no_of_best)
     print("")
-    recursive_feature_eliminate(df, names, no_of_best)
+    # recursive_feature_eliminate(df, names, no_of_best)
     print("")
-    extra_tree_classifier(df, names)
+    # extra_tree_classifier(df, names)
