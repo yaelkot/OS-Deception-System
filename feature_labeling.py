@@ -5,15 +5,21 @@ import pandas as pd
 directory = '.\\real-traffic'
 
 ip_dict = {
-    '10.0.0.10': 'Win 10',
-    '132.73.223.74': 'Win 10',
+
     '10.100.102.8': 'Rhel 8.5',
-    '10.100.102.7': 'Ubuntu 18.04',
-    '192.168.1.81': 'Mac 2017',
+    '10.0.0.7': 'Arch',
+    # '10.100.102.7': 'Ubuntu 18.04', #test
+    '10.0.0.5': 'Ubuntu 20.4',
+    '10.0.0.6': 'Win 7',
+    #doesn't has enough rows
+    # '10.0.0.4': 'Win 10',
+    # '10.0.0.10': 'Win 10',
+    # '132.73.223.74': 'Win 10',
+    '192.168.0.100': 'Win 10',
     '192.168.1.34': 'Win 11',
     '192.168.1.105': 'Win 11',
-    '10.0.0.6': 'Win 7',
-    '10.0.0.4': 'Win 10',
+    '192.168.1.81': 'Mac 2017',
+    '192.168.31.59': 'Mac 2018',
     '192.168.1.56': 'Mac 2019',
 }
 
@@ -58,8 +64,10 @@ if __name__ == '__main__':
             df = pd.read_csv(directory + '\\' + filename)
             processed_df = data_preprocess(df)
             labeled_df = add_label(processed_df, ip_dict)
+            # print(labeled_df)
             if not i:
                 labeled_df.to_csv('.\\labeled.csv', mode='a+', index=False)
             else:
                 labeled_df.to_csv('.\\labeled.csv', mode='a+', header=False, index=False)
+    # print(labeled_df)
 

@@ -20,10 +20,10 @@ def sns_plots(df, x, y):
     plt.subplots_adjust(left=None, bottom=None, right=None, top=None, wspace=None, hspace=0.2)
 
     fig = plt.figure(figsize=(24, 8))
-    """gs = gridspec.GridSpec(1, 3, figure=fig)
-    ax1 = fig.add_subplot(gs[0, 0])
+    gs = gridspec.GridSpec(1, 3, figure=fig)
+    # ax1 = fig.add_subplot(gs[0, 0])
     ax2 = fig.add_subplot(gs[0, 1])
-    ax3 = fig.add_subplot(gs[0, 2])"""
+    # ax3 = fig.add_subplot(gs[0, 2])
 
     """sns.boxplot(x=x, y=y, data=df, ax=ax1)
     sns.violinplot(x=x, y=y, data=df, ax=ax2)"""
@@ -33,7 +33,7 @@ def sns_plots(df, x, y):
 
 
 if __name__ == "__main__":
-    df = pd.read_csv("dataset\\labeled_monday.csv")
+    df = pd.read_csv(".\\labeled.csv")
 
     # filtering out one distant outlier
     newdf = df[df["tcp.window_size"] < 2000000]
