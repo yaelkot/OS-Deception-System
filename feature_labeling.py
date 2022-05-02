@@ -26,6 +26,7 @@ ip_dict = {
 
 def data_preprocess(init_df):
     init_df.dropna()
+    print(init_df)
     init_df['tcp.srcport'] = np.where(init_df['tcp.srcport'] > 1024, 1, 0)
     init_df['tcp.dstport'] = np.where(init_df['tcp.dstport'] > 1024, 1, 0)
 
@@ -69,5 +70,6 @@ if __name__ == '__main__':
                 labeled_df.to_csv('.\\labeled.csv', mode='a+', index=False)
             else:
                 labeled_df.to_csv('.\\labeled.csv', mode='a+', header=False, index=False)
+    labeled_df.dropna()
     # print(labeled_df)
 
