@@ -6,67 +6,53 @@
 
 import pandas as pd
 import sys
+
+import sklearn
+
 from ML_Models_Structure import ClassifierModel
 from traffic_data_preprocess import data_preprocess, add_label
 
-# known OS (source: https://www.unb.ca/cic/datasets/ids-2017.html)
-"""ip_dict = {
-    '192.168.10.51': 'Ubuntu server 12',
-    '192.168.10.19': 'Ubuntu 14.4',
-    '192.168.10.17': 'Ubuntu 14.4',
-    '192.168.10.16': 'Ubuntu 16.4',
-    '192.168.10.12': 'Ubuntu 16.4',
-    '192.168.10.9': 'Win 7',
-    '192.168.10.5': 'Win 8.1',
-    '192.168.10.8': 'Win Vista',
-    '192.168.10.14': 'Win 10',
-    '192.168.10.15': 'Win 10',
-    '192.168.10.25': 'macOS'
-}"""
 
-# Consider all Ubuntu versions as Ubuntu
+# Consider all Linux versions as Linux
 # ip_dict = {
-#     '192.168.10.51': 'Ubuntu',
-#     '192.168.10.19': 'Ubuntu',
-#     '192.168.10.17': 'Ubuntu',
-#     '192.168.10.16': 'Ubuntu',
-#     '192.168.10.12': 'Ubuntu',
-#     '192.168.10.9': 'Win 7',
-#     '192.168.10.5': 'Win 8.1',
-#     '192.168.10.8': 'Win Vista',
-#     '192.168.10.14': 'Win 10',
-#     '192.168.10.15': 'Win 10',
-#     '192.168.10.25': 'macOS'
+#     '10.0.0.5': 'Linux',
+#     '10.0.0.6': 'Win 7',
+#     '192.168.0.100': 'Win 10',
+#     '192.168.1.105': 'Win 11',
+#     '192.168.1.34': 'Win 11',
+#     '192.168.1.81': 'Mac 2017',
+#     '192.168.31.59': 'Mac 2018',
+#     '192.168.1.56': 'Mac 2019',
+#     '10.0.0.7': 'Linux',
+#     '10.100.102.8': 'Linux'
 # }
 
-# Consider all Ubuntu versions as Ubuntu and Windows as Windows
+# Consider all Linux versions as Linux and Windows as Windows
 ip_dict = {
-     '192.168.10.51': 'Ubuntu',
-     '192.168.10.19': 'Ubuntu',
-     '192.168.10.17': 'Ubuntu',
-     '192.168.10.16': 'Ubuntu',
-     '192.168.10.12': 'Ubuntu',
-     '192.168.10.9': 'Windows',
-     '192.168.10.5': 'Windows',
-     '192.168.10.8': 'Windows',
-     '192.168.10.14': 'Windows',
-     '192.168.10.15': 'Windows',
-     '192.168.10.25': 'macOS'
+     '10.0.0.5': 'Linux',     #was Ubuntu
+     '10.0.0.6': 'Windows',
+     '192.168.0.100': 'Windows',
+     '192.168.1.105': 'Windows',
+     '192.168.1.34': 'Windows',
+     '192.168.1.81': 'MacOS',
+     '192.168.31.59': 'MacOS',
+     '192.168.1.56': 'MacOS',
+     '10.0.0.7': 'Linux',     #was ARCH
+     '10.100.102.8': 'Linux'  #was RHEL
 }
 
 # Consider all Windows as Windows
 # ip_dict = {
-#     '192.168.10.51': 'Ubuntu server 12',
-#     '192.168.10.19': 'Ubuntu 14.4',
-#     '192.168.10.17': 'Ubuntu 14.4',
-#     '192.168.10.16': 'Ubuntu 16.4',
-#     '192.168.10.12': 'Ubuntu 16.4',
-#     '192.168.10.9': 'Windows',
-#     '192.168.10.5': 'Windows',
-#     '192.168.10.8': 'Windows',
-#     '192.168.10.14': 'Windows',
-#     '192.168.10.15': 'Windows',
-#     '192.168.10.25': 'macOS'
+#     '10.0.0.5': 'Ubuntu 20.4',
+#     '10.0.0.6': 'Windows',
+#     '192.168.0.100': 'Windows',
+#     '192.168.1.105': 'Windows',
+#     '192.168.1.34': 'Windows',
+#     '192.168.1.81': 'Mac 2017'
+#     '192.168.31.59': 'Mac 2018',
+#     '192.168.1.56': 'Mac 2019',
+#     '10.0.0.7': 'ARCH',
+#     '10.100.102.8': 'RHEL8'
 # }
 
 
@@ -103,45 +89,56 @@ def option_check():
 
 if __name__ == "__main__":
 
-    # args = option_check()
-    # filename = args[0]
-
-    filename = "dataset\\monday.csv"
-    df = pd.read_csv(filename)
-    processed_df = data_preprocess(df)
-    labeled_df = add_label(processed_df, ip_dict)
-
-    print("Total number of packets: ", len(labeled_df))
-    print(labeled_df)
-
-    labeled_df.to_csv("dataset\\labeled_monday.csv", encoding='utf-8', index=False)
-
-
-    filename = "dataset\\labeled_monday.csv"
+    # # args = option_check()
+    # # filename = args[0]
+    #
+    # filename = "dataset\\monday.csv"
+    # df = pd.read_csv(filename)
+    # processed_df = data_preprocess(df)
+    # labeled_df = add_label(processed_df, ip_dict)
+    #
+    # print("Total number of packets: ", len(labeled_df))
+    # print(labeled_df)
+    #
+    # labeled_df.to_csv("dataset\\labeled_monday.csv", encoding='utf-8', index=False)
+    #
+    #
+    filename = ".\\labeled.csv"
     labeled_df = pd.read_csv(filename)
-    #
-    # # fingerprinting with classification
-    #
-    #  x_iloc_list = ['ip.ttl', 'ip.len', 'tcp.hdr_len', 'tcp.window_size', 'ip.flags.df', 'tcp.flags.syn',
-    # 'ip.hdr_len', 'tcp.flags.ack', 'tcp.flags.push', 'tcp.seq', 'tcp.len']
-    x_iloc_list = [8, 13, 20, 29, 5, 23, 1, 26, 25, 17, 19]  # indexes in the original monday csv
-    y_iloc = 32
+    print(labeled_df)
+    # #
+    # # # fingerprinting with classification
+    # #
+    # x_iloc_list = ['ip.ttl', 'ip.len', 'tcp.hdr_len', 'tcp.window_size', 'ip.flags.df', 'tcp.flags.syn',
+    #                'ip.hdr_len', 'tcp.flags.ack', 'tcp.flags.push', 'tcp.seq', 'tcp.len', 'tcp.time_delta']
 
+    x_iloc_list = [8, 13, 20, 29, 5, 23, 1, 26, 25, 17, 19, 32]  # indexes in the labeled csv
+    y_iloc = 33
+    labeled_df = labeled_df.dropna()
+    # nan_values = float('NaN')
+    # non_numeric = 'not a numeric object'
+    # labeled_df.replace('', non_numeric, inplace=True)
+    # labeled_df.replace('', nan_values, inplace=True)
+    # new_df = labeled_df['ip.ttl']
     testSize = float(0.2)
     model = ClassifierModel(labeled_df, x_iloc_list, y_iloc, testSize)
 
-    filename = "dataset\\yair-mac-traffic.csv"
+    filename = "dataset\\yael-pcap.csv"
     df = pd.read_csv(filename)
     df = df.drop(columns=['ip.tos', 'tcp.options.mss_val'])
     user_traffic = df.dropna()
-    x_iloc_list = [8, 13, 20, 29, 5, 23, 1, 26, 25, 17, 19]   # indexes in user's csv
+    x_iloc_list = [8, 13, 20, 29, 5, 23, 1, 26, 25, 17, 19, 32]   # indexes in user's csv
 
-    model.KNN()
+    knn = model.KNN()
     model.SVM('linear')
     model.SVM('rbf')
     model.NB()
     model.RF()
     model.ANN()
+    model.DT()
 
+    # print(user_traffic)
+    print()
+    model.run_models(user_traffic, x_iloc_list, 'Windows')
 
-    # model.run_models(user_traffic, x_iloc_list, 'macOS')
+    # sklearn.metrics.confusion_matrix(, user_traffic)

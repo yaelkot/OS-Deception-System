@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import sklearn
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import classification_report, confusion_matrix
@@ -203,6 +204,4 @@ class ClassifierModel:
             pred_cols = pd.Series(loaded_model.predict(X))
             print(set(pred_cols))
             print("******************\n")
-
-
 

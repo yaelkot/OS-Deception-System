@@ -128,7 +128,7 @@ if __name__ == "__main__":
              'ip.len', 'tcp.seq', 'tcp.ack', 'tcp.len',
              'tcp.hdr_len', 'tcp.flags.fin', 'tcp.flags.syn', 'tcp.flags.reset',
              'tcp.flags.push', 'tcp.flags.ack', 'tcp.flags.urg', 'tcp.flags.cwr', 'tcp.window_size',
-             'tcp.urgent_pointer', 'os']
+             'tcp.urgent_pointer', 'tcp.time_delta', 'os']
 
     df = read_csv(filename, usecols=names)
     # no_of_best = int(input("Enter the no. of best features: "))
