@@ -139,6 +139,6 @@ if __name__ == "__main__":
 
     # print(user_traffic)
     print()
-    model.run_models(user_traffic, x_iloc_list, 'Linux')
+    model.run_models(user_traffic, x_iloc_list, 'Windows')
 
     # sklearn.metrics.confusion_matrix(, user_traffic)
