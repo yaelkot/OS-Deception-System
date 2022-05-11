@@ -13,49 +13,46 @@ from ML_Models_Structure import ClassifierModel
 from traffic_data_preprocess import data_preprocess, add_label
 
 
-# Consider all Ubuntu versions as Ubuntu
+# Consider all Linux versions as Linux
 # ip_dict = {
-#     '192.168.10.51': 'Ubuntu',
-#     '192.168.10.19': 'Ubuntu',
-#     '192.168.10.17': 'Ubuntu',
-#     '192.168.10.16': 'Ubuntu',
-#     '192.168.10.12': 'Ubuntu',
-#     '192.168.10.9': 'Win 7',
-#     '192.168.10.5': 'Win 8.1',
-#     '192.168.10.8': 'Win Vista',
-#     '192.168.10.14': 'Win 10',
-#     '192.168.10.15': 'Win 10',
-#     '192.168.10.25': 'macOS'
+#     '10.0.0.5': 'Linux',
+#     '10.0.0.6': 'Win 7',
+#     '192.168.0.100': 'Win 10',
+#     '192.168.1.105': 'Win 11',
+#     '192.168.1.34': 'Win 11',
+#     '192.168.1.81': 'Mac 2017',
+#     '192.168.31.59': 'Mac 2018',
+#     '192.168.1.56': 'Mac 2019',
+#     '10.0.0.7': 'Linux',
+#     '10.100.102.8': 'Linux'
 # }
 
-# Consider all Ubuntu versions as Ubuntu and Windows as Windows
+# Consider all Linux versions as Linux and Windows as Windows
 ip_dict = {
-     '192.168.10.51': 'Ubuntu',
-     '192.168.10.19': 'Ubuntu',
-     '192.168.10.17': 'Ubuntu',
-     '192.168.10.16': 'Ubuntu',
-     '192.168.10.12': 'Ubuntu',
-     '192.168.10.9': 'Windows',
-     '192.168.10.5': 'Windows',
-     '192.168.10.8': 'Windows',
-     '192.168.10.14': 'Windows',
-     '192.168.10.15': 'Windows',
-     '192.168.10.25': 'macOS'
+     '10.0.0.5': 'Linux',     #was Ubuntu
+     '10.0.0.6': 'Windows',
+     '192.168.0.100': 'Windows',
+     '192.168.1.105': 'Windows',
+     '192.168.1.34': 'Windows',
+     '192.168.1.81': 'MacOS',
+     '192.168.31.59': 'MacOS',
+     '192.168.1.56': 'MacOS',
+     '10.0.0.7': 'Linux',     #was ARCH
+     '10.100.102.8': 'Linux'  #was RHEL
 }
 
 # Consider all Windows as Windows
 # ip_dict = {
-#     '192.168.10.51': 'Ubuntu server 12',
-#     '192.168.10.19': 'Ubuntu 14.4',
-#     '192.168.10.17': 'Ubuntu 14.4',
-#     '192.168.10.16': 'Ubuntu 16.4',
-#     '192.168.10.12': 'Ubuntu 16.4',
-#     '192.168.10.9': 'Windows',
-#     '192.168.10.5': 'Windows',
-#     '192.168.10.8': 'Windows',
-#     '192.168.10.14': 'Windows',
-#     '192.168.10.15': 'Windows',
-#     '192.168.10.25': 'macOS'
+#     '10.0.0.5': 'Ubuntu 20.4',
+#     '10.0.0.6': 'Windows',
+#     '192.168.0.100': 'Windows',
+#     '192.168.1.105': 'Windows',
+#     '192.168.1.34': 'Windows',
+#     '192.168.1.81': 'Mac 2017'
+#     '192.168.31.59': 'Mac 2018',
+#     '192.168.1.56': 'Mac 2019',
+#     '10.0.0.7': 'ARCH',
+#     '10.100.102.8': 'RHEL8'
 # }
 
 
@@ -124,6 +121,7 @@ if __name__ == "__main__":
     # non_numeric = 'not a numeric object'
     # labeled_df.replace('', non_numeric, inplace=True)
     # labeled_df.replace('', nan_values, inplace=True)
+
     testSize = float(0.2)
     model = ClassifierModel(labeled_df, x_iloc_list, y_iloc, testSize)
 
@@ -142,5 +140,4 @@ if __name__ == "__main__":
     model.DT()
 
     # model.run_models(user_traffic, x_iloc_list, 'macOS')
-
     # sklearn.metrics.confusion_matrix(, user_traffic)
