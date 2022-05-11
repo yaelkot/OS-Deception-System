@@ -106,7 +106,7 @@ if __name__ == "__main__":
     # labeled_df.to_csv("dataset\\labeled_monday.csv", encoding='utf-8', index=False)
     #
     #
-    filename = ".\\labeled.csv"
+    filename = ".\\real-traffic\\train-set.csv"
     labeled_df = pd.read_csv(filename)
     print(labeled_df)
     # #
@@ -115,22 +115,23 @@ if __name__ == "__main__":
     # x_iloc_list = ['ip.ttl', 'ip.len', 'tcp.hdr_len', 'tcp.window_size', 'ip.flags.df', 'tcp.flags.syn',
     #                'ip.hdr_len', 'tcp.flags.ack', 'tcp.flags.push', 'tcp.seq', 'tcp.len', 'tcp.time_delta']
 
-    x_iloc_list = [8, 13, 20, 29, 5, 23, 1, 26, 25, 17, 19, 32]  # indexes in the labeled csv
-    y_iloc = 33
+    # x_iloc_list = [8, 13, 20, 29, 5, 23, 1, 26, 25, 17, 19, 32]  # indexes in the labeled csv
+    x_iloc_list = [i for i in range(len(labeled_df.columns)-1)]  # indexes in the labeled csv
+    y_iloc = len(labeled_df.columns)-1
     labeled_df = labeled_df.dropna()
+
     # nan_values = float('NaN')
     # non_numeric = 'not a numeric object'
     # labeled_df.replace('', non_numeric, inplace=True)
     # labeled_df.replace('', nan_values, inplace=True)
-    new_df = labeled_df['ip.ttl']
     testSize = float(0.2)
     model = ClassifierModel(labeled_df, x_iloc_list, y_iloc, testSize)
 
-    filename = "real-traffic\\yairWireShark.csv"
+    """filename = "real-traffic\\yairWireShark.csv"
     df = pd.read_csv(filename)
     df = df.drop(columns=['ip.tos', 'tcp.options.mss_val'])
     user_traffic = df.dropna()
-    x_iloc_list = [8, 13, 20, 29, 5, 23, 1, 26, 25, 17, 19, 32]   # indexes in user's csv
+    x_iloc_list = [8, 13, 20, 29, 5, 23, 1, 26, 25, 17, 19, 32]   # indexes in user's csv"""
 
     knn = model.KNN()
     model.SVM('linear')
@@ -140,8 +141,6 @@ if __name__ == "__main__":
     model.ANN()
     model.DT()
 
-    print(user_traffic)
-    print()
     # model.run_models(user_traffic, x_iloc_list, 'macOS')
 
     # sklearn.metrics.confusion_matrix(, user_traffic)
