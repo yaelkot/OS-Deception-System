@@ -1,10 +1,10 @@
 # Modified from source: https://machinelearningmastery.com/feature-selection-machine-learning-python/
 
 # Feature Selection with Univariate Statistical Tests
+import pandas as pd
 from pandas import read_csv
 from numpy import set_printoptions
-from sklearn.feature_selection import SelectKBest, mutual_info_classif
-from sklearn.feature_selection import f_classif
+from sklearn.feature_selection import SelectKBest, mutual_info_classif, f_classif
 
 
 # select best features from all features using ANOVA (f_classif())
@@ -61,7 +61,7 @@ def recursive_feature_eliminate(df, names, no_of_best):
     
     # feature extraction
     model = LogisticRegression(solver='lbfgs')
-    rfe = RFE(model, no_of_best)
+    rfe = RFE(model, n_features_to_select=no_of_best)
     fit = rfe.fit(X, Y)
     
     # print("Num Features: %d" % fit.n_features_)
@@ -76,7 +76,7 @@ def recursive_feature_eliminate(df, names, no_of_best):
     for i, j in zip(names, list(fit.support_)):
         support[i] = j
     # print(support)
-    print("{:<15} {:<10}".format('Feature','Support'))
+    print("{:<15} {:<10}".format('Feature', 'Support'))
     for k, v in support.items():
         print("{:<15} {:<10}".format(k, v))
 
@@ -119,24 +119,35 @@ def extra_tree_classifier(df, names):
     for k, v in feature_importance.items():
         print("{:<15} {:<10}".format(k, v))
 
+
+# import VarianceThreshold
+from sklearn.feature_selection import VarianceThreshold
     
 if __name__ == "__main__":
-    filename = "./dataset/labeled_monday.csv"
+    filename = "./real-traffic/labeled.csv"
     # filename = input("Enter the filename: ")
     names = ['ip.hdr_len', 'ip.flags.rb',
              'ip.flags.df', 'ip.flags.mf', 'ip.frag_offset', 'ip.ttl',
              'ip.len', 'tcp.seq', 'tcp.ack', 'tcp.len',
              'tcp.hdr_len', 'tcp.flags.fin', 'tcp.flags.syn', 'tcp.flags.reset',
              'tcp.flags.push', 'tcp.flags.ack', 'tcp.flags.urg', 'tcp.flags.cwr', 'tcp.window_size',
-             'tcp.urgent_pointer', 'tcp.time_delta', 'os']
+             'tcp.urgent_pointer', 'tcp.time_delta', 'tcp.srcport', 'tcp.dstport',
+             'os']
 
     df = read_csv(filename, usecols=names)
+
+    # df['os'] = df['os'].replace(df.os.unique(), [i for i in range(len(df.os.unique()))])
+    df = df.loc[:, (df != df.iloc[0]).any()]
+    names = list(df.columns)
+    df.to_csv('./real-traffic/train-set.csv', index=False)
+    print(names)
+
     # no_of_best = int(input("Enter the no. of best features: "))
-    no_of_best = 10
+    no_of_best = 5
     
     print("")
-    univariate_stat(df, names, no_of_best)
+    # univariate_stat(df, names, no_of_best)
     print("")
     # recursive_feature_eliminate(df, names, no_of_best)
     print("")
-    # extra_tree_classifier(df, names)
+    extra_tree_classifier(df, names)
