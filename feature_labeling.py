@@ -7,8 +7,9 @@ directory = '.\\real-traffic'
 ip_dict = {
 
     '10.0.0.6': 'Win 7',
-    '132.73.223.74': 'Win10',
     '192.168.0.100': 'Win10',
+    '192.168.1.11': 'Win10',
+    '132.73.223.74': 'Win10',
     '192.168.1.34': 'Win11',
     '192.168.1.105': 'Win11',
 
@@ -18,15 +19,10 @@ ip_dict = {
     '192.168.0.10': 'Mac2020',
 
     '10.100.102.8': 'Rhel8',
+    '192.168.43.80': 'Pop',
     '10.100.102.7': 'Ubuntu2018',
-
-    # '10.0.0.7': 'Arch',
-    # '10.100.102.7': 'Ubuntu 18.04', #test
-    # '10.0.0.5': 'Ubuntu 20.4',
-    # doesn't has enough rows
-    # '10.0.0.4': 'Win 10',
-    # '10.0.0.10': 'Win 10',
-
+    '10.0.0.7': 'Arch',
+    '10.0.0.5': 'Ubuntu 20.4'
 
 }
 """
@@ -54,6 +50,7 @@ ip_dict = {
 def data_preprocess(init_df):
 
     init_df.drop(columns=['ip.tos', 'tcp.options.mss_val'], inplace=True)
+    # init_df['tcp.options.mss_val'].fillna(method='ffill', inplace=True)
     init_df.dropna(inplace=True)
 
     """init_df['tcp.srcport'] = np.where(init_df['tcp.srcport'] > 1024, 1, 0)
@@ -63,10 +60,88 @@ def data_preprocess(init_df):
     init_df['tcp.flags'] = init_df['tcp.flags'].apply(str).apply(int, base=16)
     init_df['ip.flags'] = init_df['ip.flags'].apply(str).apply(int, base=16)
 
+    init_df.sort_values(['tcp.stream', 'frame.time_relative'], inplace=True, ignore_index=True)
+
+    init_df = count_delta_time_average_and_std_per_10_packets(init_df)
+    init_df = average_and_std_ttl_per_10_packets(init_df)
+    init_df = average_and_std_packet_len_per_10_packets(init_df)
+
     return init_df
 
 
+def count_delta_time_average_and_std_per_10_packets(init_df):
+
+    init_df['stream_key'] = 0
+    stream_num = init_df['tcp.stream'][0]
+    counter, stream_index = 1, 1
+
+    for row in range(init_df.shape[0]):
+
+        if init_df['tcp.stream'][row] != stream_num:
+            stream_num = init_df['tcp.stream'][row]
+            counter, stream_index = 1, stream_index + 1
+
+        elif counter > 10:
+            counter, stream_index = 1, stream_index + 1
+
+        init_df.at[row, 'stream_key'] = stream_index
+        counter += 1
+
+    average_values_dict = {}
+    std_values_dict = {}
+
+    for i_stream in sorted(init_df['stream_key'].unique()):
+        mean = init_df.loc[init_df['stream_key'] == i_stream]['tcp.time_delta'].mean()
+        std = init_df.loc[init_df['stream_key'] == i_stream]['tcp.time_delta'].std()
+        average_values_dict[i_stream] = mean
+        std_values_dict[i_stream] = std
+    init_df['average_time_delta'] = init_df['stream_key'].apply(set_row_feature, args=(average_values_dict,))
+    init_df['std_time_delta'] = init_df['stream_key'].apply(set_row_feature, args=(std_values_dict,))
+
+    return init_df
+
+
+def average_and_std_ttl_per_10_packets(init_df):
+
+    average_values_dict = {}
+    std_values_dict = {}
+
+    for i_stream in sorted(init_df['stream_key'].unique()):
+        mean = init_df.loc[init_df['stream_key'] == i_stream]['ip.ttl'].mean()
+        std = init_df.loc[init_df['stream_key'] == i_stream]['ip.ttl'].std()
+        average_values_dict[i_stream] = mean
+        std_values_dict[i_stream] = std
+    init_df['average_ttl'] = init_df['stream_key'].apply(set_row_feature, args=(average_values_dict,))
+    init_df['std_ttl'] = init_df['stream_key'].apply(set_row_feature, args=(std_values_dict,))
+
+    return init_df
+
+
+def average_and_std_packet_len_per_10_packets(init_df):
+
+    average_values_dict = {}
+    std_values_dict = {}
+
+    for i_stream in sorted(init_df['stream_key'].unique()):
+        mean = init_df.loc[init_df['stream_key'] == i_stream]['frame.len'].mean()
+        std = init_df.loc[init_df['stream_key'] == i_stream]['frame.len'].std()
+        average_values_dict[i_stream] = mean
+        std_values_dict[i_stream] = std
+    init_df['average_len'] = init_df['stream_key'].apply(set_row_feature, args=(average_values_dict,))
+    init_df['std_len'] = init_df['stream_key'].apply(set_row_feature, args=(std_values_dict,))
+
+    return init_df
+
+
+def set_row_feature(row_value, values_dict):
+    """
+        This is a helper function for the dataframe's apply method
+    """
+    return values_dict[row_value]
+
+
 def add_label(df, ip_label_dict):
+
     # create list of known IP addresses
     known_ip_list = [key for key in ip_label_dict.keys()]
 
@@ -85,6 +160,7 @@ def add_label(df, ip_label_dict):
 
     return filtered_df
 
+
 if __name__ == '__main__':
 
     for i, filename in enumerate(os.listdir(directory)):
@@ -92,6 +168,7 @@ if __name__ == '__main__':
         if os.path.isfile(f):
             print(directory + '\\' + filename)
             df = pd.read_csv(directory + '\\' + filename)
+            df = df[:1000] if df.shape[0] > 1000 else df
             processed_df = data_preprocess(df)
             labeled_df = add_label(processed_df, ip_dict)
             # print(labeled_df)
