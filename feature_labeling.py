@@ -4,7 +4,7 @@ import pandas as pd
 
 directory = '.\\real-traffic'
 
-ip_dict = {
+"""ip_dict = {
 
     '10.0.0.6': 'Win 7',
     '192.168.0.100': 'Win10',
@@ -23,28 +23,27 @@ ip_dict = {
     '10.100.102.7': 'Ubuntu2018',
     '10.0.0.7': 'Arch',
     '10.0.0.5': 'Ubuntu 20.4'
+}"""
 
-}
-"""
 ip_dict = {
-
-    '10.100.102.8': 'Linux',
-    '10.0.0.7': 'Linux',
-    # '10.100.102.7': 'Ubuntu 18.04', #test
-    # '10.0.0.5': 'Ubuntu 20.4',
     '10.0.0.6': 'Windows',
-    # doesn't has enough rows
-    # '10.0.0.4': 'Win 10',
-    # '10.0.0.10': 'Win 10',
-    '132.73.223.74': 'Windows',
     '192.168.0.100': 'Windows',
+    '192.168.1.11': 'Windows',
+    '132.73.223.74': 'Windows',
     '192.168.1.34': 'Windows',
     '192.168.1.105': 'Windows',
+
     '192.168.1.81': 'Mac',
     '192.168.31.59': 'Mac',
     '192.168.1.56': 'Mac',
     '192.168.0.10': 'Mac',
-}"""
+
+    '10.100.102.8': 'Linux',
+    '192.168.43.80': 'Linux',
+    '10.100.102.7': 'Linux',
+    '10.0.0.7': 'Linux',
+    '10.0.0.5': 'Linux'
+}
 
 
 def data_preprocess(init_df):
@@ -65,6 +64,7 @@ def data_preprocess(init_df):
     init_df = count_delta_time_average_and_std_per_10_packets(init_df)
     init_df = average_and_std_ttl_per_10_packets(init_df)
     init_df = average_and_std_packet_len_per_10_packets(init_df)
+    init_df.dropna(inplace=True)
 
     return init_df
 
@@ -123,8 +123,8 @@ def average_and_std_packet_len_per_10_packets(init_df):
     std_values_dict = {}
 
     for i_stream in sorted(init_df['stream_key'].unique()):
-        mean = init_df.loc[init_df['stream_key'] == i_stream]['frame.len'].mean()
-        std = init_df.loc[init_df['stream_key'] == i_stream]['frame.len'].std()
+        mean = init_df.loc[init_df['stream_key'] == i_stream]['tcp.len'].mean()
+        std = init_df.loc[init_df['stream_key'] == i_stream]['tcp.len'].std()
         average_values_dict[i_stream] = mean
         std_values_dict[i_stream] = std
     init_df['average_len'] = init_df['stream_key'].apply(set_row_feature, args=(average_values_dict,))
@@ -168,14 +168,26 @@ if __name__ == '__main__':
         if os.path.isfile(f):
             print(directory + '\\' + filename)
             df = pd.read_csv(directory + '\\' + filename)
-            df = df[:1000] if df.shape[0] > 1000 else df
             processed_df = data_preprocess(df)
             labeled_df = add_label(processed_df, ip_dict)
-            # print(labeled_df)
-            if not i:
+
+            # limit number of records
+            test_df = labeled_df[700:840] if df.shape[0] > 840 else labeled_df[700:]
+            labeled_df = labeled_df[:700] if df.shape[0] > 700 else labeled_df
+            print(labeled_df.shape[0])
+
+            filename_to_miss = "ron-win11.csv"
+
+            if filename == filename_to_miss:
+                labeled_df.to_csv(directory + '\\labeled_to_miss.csv', mode='a+', index=False)
+                continue
+
+            elif not i:
                 labeled_df.to_csv(directory + '\\labeled.csv', mode='a+', index=False)
+                test_df.to_csv(directory + '\\test.csv', mode='a+', index=False)
             else:
                 labeled_df.to_csv(directory + '\\labeled.csv', mode='a+', header=False, index=False)
+                test_df.to_csv(directory + '\\test.csv', mode='a+', header=False, index=False)
 
     # print(labeled_df)
 

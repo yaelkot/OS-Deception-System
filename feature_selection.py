@@ -5,7 +5,7 @@ import pandas as pd
 from pandas import read_csv
 from numpy import set_printoptions
 from sklearn.feature_selection import SelectKBest, mutual_info_classif, f_classif
-
+import numpy as np
 
 # select best features from all features using ANOVA (f_classif())
 def univariate_stat(df, names, no_of_best):
@@ -124,15 +124,15 @@ def extra_tree_classifier(df, names):
 from sklearn.feature_selection import VarianceThreshold
     
 if __name__ == "__main__":
-    filename = "./real-traffic/labeled.csv"
+    filename = "C:\\Users\\ADMIN\\Documents\\OS-Detection-System\\real-traffic\\labeled.csv"
     # filename = input("Enter the filename: ")
     names = ['ip.hdr_len', 'ip.flags.rb',
              'ip.flags.df', 'ip.flags.mf', 'ip.frag_offset', 'ip.ttl',
              'ip.len', 'tcp.seq', 'tcp.ack', 'tcp.len',
              'tcp.hdr_len', 'tcp.flags.fin', 'tcp.flags.syn', 'tcp.flags.reset',
              'tcp.flags.push', 'tcp.flags.ack', 'tcp.flags.urg', 'tcp.flags.cwr', 'tcp.window_size',
-             'tcp.urgent_pointer', 'tcp.time_delta', 'tcp.srcport', 'tcp.dstport',
-             'os']
+             'tcp.urgent_pointer', 'tcp.time_delta', 'tcp.srcport', 'tcp.dstport', 'frame.len',
+             'average_time_delta', 'std_time_delta', 'average_ttl', 'std_ttl', 'average_len', 'std_len', 'os']
 
     df = read_csv(filename, usecols=names)
 
@@ -143,11 +143,11 @@ if __name__ == "__main__":
     print(names)
 
     # no_of_best = int(input("Enter the no. of best features: "))
-    no_of_best = 5
+    no_of_best = 10
     
     print("")
-    # univariate_stat(df, names, no_of_best)
+    univariate_stat(df, names, no_of_best)
     print("")
-    # recursive_feature_eliminate(df, names, no_of_best)
+    recursive_feature_eliminate(df, names, no_of_best)
     print("")
     extra_tree_classifier(df, names)
