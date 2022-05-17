@@ -29,7 +29,7 @@ class ClassifierModel:
         # X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=testSize, random_state=0)
 
         sc = MinMaxScaler()
-        X_train = sc.fit_transform(X)
+        # X_train = sc.fit_transform(X)
         # X_test = sc.transform(X_test)
 
         self.X = X
@@ -202,4 +202,3 @@ class ClassifierModel:
             result = loaded_model.score(X, Y)
             print(result)
             print("******************\n")
-

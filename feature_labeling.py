@@ -5,19 +5,16 @@ import pandas as pd
 directory = '.\\real-traffic'
 
 """ip_dict = {
-
     '10.0.0.6': 'Win 7',
     '192.168.0.100': 'Win10',
     '192.168.1.11': 'Win10',
     '132.73.223.74': 'Win10',
     '192.168.1.34': 'Win11',
     '192.168.1.105': 'Win11',
-
     '192.168.1.81': 'Mac2017',
     '192.168.31.59': 'Mac2018',
     '192.168.1.56': 'Mac2019',
     '192.168.0.10': 'Mac2020',
-
     '10.100.102.8': 'Rhel8',
     '192.168.43.80': 'Pop',
     '10.100.102.7': 'Ubuntu2018',
@@ -176,7 +173,7 @@ if __name__ == '__main__':
             labeled_df = labeled_df[:700] if df.shape[0] > 700 else labeled_df
             print(labeled_df.shape[0])
 
-            filename_to_miss = "ron-win11.csv"
+            filename_to_miss = ""
 
             if filename == filename_to_miss:
                 labeled_df.to_csv(directory + '\\labeled_to_miss.csv', mode='a+', index=False)
@@ -190,4 +187,3 @@ if __name__ == '__main__':
                 test_df.to_csv(directory + '\\test.csv', mode='a+', header=False, index=False)
 
     # print(labeled_df)
-
