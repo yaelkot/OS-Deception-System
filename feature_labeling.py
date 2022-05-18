@@ -176,7 +176,7 @@ if __name__ == '__main__':
             labeled_df = labeled_df[:700] if df.shape[0] > 700 else labeled_df
             print(labeled_df.shape[0])
 
-            filename_to_miss = "ron-win11.csv"
+            filename_to_miss = ""
 
             if filename == filename_to_miss:
                 labeled_df.to_csv(directory + '\\labeled_to_miss.csv', mode='a+', index=False)

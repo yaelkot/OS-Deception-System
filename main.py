@@ -120,11 +120,9 @@ if __name__ == "__main__":
     filename = ".\\real-traffic\\labeled.csv"
 
     names = ['ip.flags.df', 'ip.ttl', 'ip.len', 'tcp.srcport',
-             'tcp.dstport', 'tcp.seq', 'tcp.ack', 'tcp.len',
-             'tcp.hdr_len', 'tcp.flags.fin', 'tcp.flags.syn',
-             'tcp.flags.reset', 'tcp.flags.push', 'tcp.flags.ack', 'tcp.flags.cwr',
-             'tcp.window_size', 'tcp.time_delta', 'frame.len',
-             'average_time_delta',	'std_time_delta', 'average_ttl', 'average_len', 'std_len', 'os']
+                      'tcp.dstport', 'tcp.seq', 'tcp.len',
+                      'tcp.hdr_len',  'tcp.flags.push', 'tcp.window_size', 'frame.len',
+                      'average_time_delta',	 'average_ttl', 'average_len', 'std_len', 'os']
 
     labeled_df = pd.read_csv(filename, usecols=names)
     print(labeled_df)
@@ -134,18 +132,17 @@ if __name__ == "__main__":
 
     model = ClassifierModel(labeled_df, x_iloc_list, y_iloc)
 
-    filename = "real-traffic\\labeled_to_miss.csv"
+    filename = "real-traffic\\test.csv"
 
     test_set = pd.read_csv(filename, usecols=names)
 
-    knn = model.KNN()
+    """    knn = model.KNN()
     model.SVM('linear')
     model.SVM('rbf')
     model.NB()
     model.RF()
     model.ANN()
-    model.DT()
+    model.DT()"""
 
     model.run_models(test_set, x_iloc_list, y_iloc)
-
     # sklearn.metrics.confusion_matrix(, user_traffic)

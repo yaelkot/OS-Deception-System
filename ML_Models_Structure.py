@@ -6,7 +6,7 @@ import seaborn as sns
 import sklearn
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
-from sklearn.metrics import classification_report, confusion_matrix
+from sklearn.metrics import classification_report, confusion_matrix, plot_confusion_matrix
 from sklearn.neural_network import MLPClassifier
 from sklearn.svm import SVC
 from sklearn.ensemble import RandomForestClassifier
@@ -29,7 +29,7 @@ class ClassifierModel:
         # X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=testSize, random_state=0)
 
         sc = MinMaxScaler()
-        X_train = sc.fit_transform(X)
+        # X_train = sc.fit_transform(X)
         # X_test = sc.transform(X_test)
 
         self.X = X
@@ -42,7 +42,8 @@ class ClassifierModel:
 
     # ****************** Scores: ************************************
 
-    def acciuracy(self, confusion_matrix):
+    def accuracy(self, confusion_matrix):
+
         sum, total = 0, 0
         for i in range(len(confusion_matrix)):
             for j in range(len(confusion_matrix[0])):
@@ -51,8 +52,9 @@ class ClassifierModel:
                 total += confusion_matrix[i, j]
         return sum/total
 
-    def classification_repokrt_plot(self, clf_report, filename):
-        folder = "clf_plots_monday"
+    def classification_report_plot(self, clf_report, filename):
+
+        folder = "real_data_cm_plots"
         if not os.path.isdir(folder):
             os.mkdir(folder)
 
@@ -62,6 +64,26 @@ class ClassifierModel:
         sns.set(font_scale=4)
         sns.heatmap(pd.DataFrame(clf_report).iloc[:-1, :].T, annot=True, cmap="Blues")
         fig.savefig(out_file_name, bbox_inches="tight")
+
+    def confusion_matrix_report_plot(self, loaded_model, filename, X, Y, experiment_alias=''):
+
+        folder = "confusion_matrix"
+        if not os.path.isdir(folder):
+            os.mkdir(folder)
+
+        if experiment_alias != '':
+            folder = folder + '/' + experiment_alias
+            if not os.path.isdir(folder):
+                os.mkdir(folder)
+
+        out_file_name = folder + "/" + filename + ".png"
+        matrix = plot_confusion_matrix(loaded_model, X, Y, labels=['Windows', 'Linux', 'Mac'],
+                                       values_format='.2%', normalize='true')
+        title = 'Confusion Matrix ' + filename.upper() + '\n' + experiment_alias
+        matrix.ax_.set_title(title, color='Black')
+        plt.xlabel('Predicted Label', color='Black')
+        plt.ylabel('True Label', color='Black')
+        matrix.figure_.savefig(out_file_name, bbox_inches="tight")
 
     def k_fold(self, estimator, k, estimator_name):
 
@@ -85,8 +107,6 @@ class ClassifierModel:
         # print('Classification Report: ')
         # print(classification_report(self.y_test, y_pred), '\n')
         # print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
-        num_of_folds = 5
-        self.k_fold(ANN_Classifier, num_of_folds, "ANN")
 
         # self.classification_report_plot(classification_report(self.y_test, y_pred, output_dict=True), "ANN")
 
@@ -102,8 +122,6 @@ class ClassifierModel:
         # print(classification_report(self.y_test, y_pred), '\n')
         # print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
         #
-        # num_of_folds = 5
-        # self.k_fold(SVM_Classifier, num_of_folds, "SVM")
         #
         # self.classification_report_plot(classification_report(self.y_test, y_pred, output_dict=True), "SVM" + kernel_type)
 
@@ -120,8 +138,6 @@ class ClassifierModel:
         # print(p, '\n')
         # # print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
         #
-        # num_of_folds = 5
-        # self.k_fold(RF_Classifier, num_of_folds, "RF")
         #
         # self.classification_report_plot(classification_report(self.y_test, y_pred, output_dict=True), "RF")
 
@@ -137,8 +153,6 @@ class ClassifierModel:
         # print(classification_report(self.y_test, y_pred), '\n')
         # print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
         #
-        # num_of_folds = 5
-        # self.k_fold(NB_Classifier, num_of_folds, "NB")
         #
         # self.classification_report_plot(classification_report(self.y_test, y_pred, output_dict=True), "NB")
 
@@ -155,8 +169,6 @@ class ClassifierModel:
         # print(classification_report(self.y_test, y_pred), '\n')
         # print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
         #
-        # num_of_folds = 5
-        # self.k_fold(KNN_Classifier, num_of_folds, "KNN")
         #
         # self.classification_report_plot(classification_report(self.y_test, y_pred,output_dict=True), "KNN")
 
@@ -172,8 +184,6 @@ class ClassifierModel:
         # print(classification_report(self.y_test, y_pred), '\n')
         # print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
         #
-        # num_of_folds = 5
-        # self.k_fold(DT_Classifier, num_of_folds, "DT")
         #
         # self.classification_report_plot(classification_report(self.y_test, y_pred,output_dict=True), "DT")
 
@@ -190,7 +200,6 @@ class ClassifierModel:
         sns.heatmap(accuracies, annot=True, cmap="BuPu")
         fig.savefig(out_file_name, bbox_inches="tight")
 
-
     def run_models(self, dataset, x_iloc_list, os_loc):
 
         X = dataset.iloc[:, x_iloc_list].values
@@ -199,7 +208,10 @@ class ClassifierModel:
         for filename in models:
             print("******************\n" + filename + "\n******************\n")
             loaded_model = joblib.load(filename)
-            result = loaded_model.score(X, Y)
-            print(result)
+            filename = filename.split('/')[1].split('.')[0]
+            results = loaded_model.predict(X)
+            print('Precision: ', self.accuracy(confusion_matrix(Y, results)*100), '%')
             print("******************\n")
+            self.confusion_matrix_report_plot(loaded_model, filename, X, Y, "experiment_1_all_os_types")
+        # self.models_summery()
 
