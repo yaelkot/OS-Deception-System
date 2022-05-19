@@ -208,9 +208,15 @@ class ClassifierModel:
         for filename in models:
             print("******************\n" + filename + "\n******************\n")
             loaded_model = joblib.load(filename)
+<<<<<<< HEAD
             filename = filename.split('/')[1].split('.')[0]
             results = loaded_model.predict(X)
             print('Precision: ', self.accuracy(confusion_matrix(Y, results)*100), '%')
             print("******************\n")
             self.confusion_matrix_report_plot(loaded_model, filename, X, Y, "experiment_1_all_os_types")
 
+=======
+            result = loaded_model.score(X, Y)
+            print(result)
+            print("******************\n")
+>>>>>>> main
