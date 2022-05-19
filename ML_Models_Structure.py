@@ -213,5 +213,4 @@ class ClassifierModel:
             print('Precision: ', self.accuracy(confusion_matrix(Y, results)*100), '%')
             print("******************\n")
             self.confusion_matrix_report_plot(loaded_model, filename, X, Y, "experiment_1_all_os_types")
-        # self.models_summery()
 

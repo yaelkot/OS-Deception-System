@@ -5,7 +5,6 @@ import pandas as pd
 directory = '.\\real-traffic'
 
 """ip_dict = {
-
     '10.0.0.6': 'Win 7',
     '192.168.0.100': 'Win10',
     '10.0.0.10': 'Win10',
@@ -13,14 +12,12 @@ directory = '.\\real-traffic'
     '132.73.223.74': 'Win10',
     '192.168.1.34': 'Win11',
     '192.168.1.105': 'Win11',
-
     '192.168.1.81': 'Mac2017',
     '192.168.31.59': 'Mac2018',
     '192.168.31.56': 'Mac2018',
     '192.168.1.56': 'Mac2019',
     '192.168.0.103': 'Mac2019',
     '192.168.0.10': 'Mac2020',
-
     '10.100.102.8': 'Rhel8',
     '192.168.43.80': 'Pop',
     '10.100.102.7': 'Ubuntu2018',
@@ -181,9 +178,7 @@ if __name__ == '__main__':
             processed_df = data_preprocess(df)
             labeled_df = add_label(processed_df, ip_dict)
 
-            filename_to_miss = "win10-gila-ver1.csv"
-
-            print(labeled_df['os'])
+            filename_to_miss = ""
 
             if filename == filename_to_miss:
                 labeled_df.to_csv(clf_model_dir + '\\labeled_to_miss.csv', mode='a+', index=False)
@@ -211,6 +206,3 @@ if __name__ == '__main__':
 
     train_set.to_csv(clf_model_dir + '\\labeled.csv', mode='a+', index=False)
     test_set.to_csv(clf_model_dir + '\\test.csv', mode='a+', index=False)
-
-    # print(labeled_df)
-

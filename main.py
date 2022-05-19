@@ -28,19 +28,16 @@ from traffic_data_preprocess import data_preprocess, add_label
 # }
 
 """ip_dict = {
-
     '10.0.0.6': 'Win 7',
     '192.168.0.100': 'Win10',
     '192.168.1.11': 'Win10',
     '132.73.223.74': 'Win10',
     '192.168.1.34': 'Win11',
     '192.168.1.105': 'Win11',
-
     '192.168.1.81': 'Mac2017',
     '192.168.31.59': 'Mac2018',
     '192.168.1.56': 'Mac2019',
     '192.168.0.10': 'Mac2020',
-
     '10.100.102.8': 'Rhel8',
     '192.168.43.80': 'Pop',
     '10.100.102.7': 'Ubuntu2018',
@@ -118,6 +115,13 @@ def option_check():
 if __name__ == "__main__":
 
     filename = ".\\real-traffic\\labeled.csv"
+
+    # names = ['ip.flags.df', 'ip.ttl', 'ip.len', 'tcp.srcport',
+    #          'tcp.dstport', 'tcp.seq', 'tcp.ack', 'tcp.len',
+    #          'tcp.hdr_len', 'tcp.flags.fin', 'tcp.flags.syn',
+    #          'tcp.flags.reset', 'tcp.flags.push', 'tcp.flags.ack', 'tcp.flags.cwr',
+    #          'tcp.window_size', 'tcp.time_delta', 'frame.len',
+    #          'average_time_delta',	'std_time_delta', 'average_ttl', 'average_len', 'std_len', 'os']
 
     names = ['ip.flags.df', 'ip.ttl', 'ip.len', 'tcp.srcport',
                       'tcp.dstport', 'tcp.seq', 'tcp.len',
