@@ -7,13 +7,16 @@ directory = '.\\real-traffic'
 """ip_dict = {
     '10.0.0.6': 'Win 7',
     '192.168.0.100': 'Win10',
+    '10.0.0.10': 'Win10',
     '192.168.1.11': 'Win10',
     '132.73.223.74': 'Win10',
     '192.168.1.34': 'Win11',
     '192.168.1.105': 'Win11',
     '192.168.1.81': 'Mac2017',
     '192.168.31.59': 'Mac2018',
+    '192.168.31.56': 'Mac2018',
     '192.168.1.56': 'Mac2019',
+    '192.168.0.103': 'Mac2019',
     '192.168.0.10': 'Mac2020',
     '10.100.102.8': 'Rhel8',
     '192.168.43.80': 'Pop',
@@ -23,8 +26,10 @@ directory = '.\\real-traffic'
 }"""
 
 ip_dict = {
+
     '10.0.0.6': 'Windows',
     '192.168.0.100': 'Windows',
+    '10.0.0.10': 'Windows',
     '192.168.1.11': 'Windows',
     '132.73.223.74': 'Windows',
     '192.168.1.34': 'Windows',
@@ -32,7 +37,9 @@ ip_dict = {
 
     '192.168.1.81': 'Mac',
     '192.168.31.59': 'Mac',
+    '192.168.31.56': 'Mac',
     '192.168.1.56': 'Mac',
+    '192.168.0.103': 'Mac',
     '192.168.0.10': 'Mac',
 
     '10.100.102.8': 'Linux',
@@ -45,7 +52,7 @@ ip_dict = {
 
 def data_preprocess(init_df):
 
-    init_df.drop(columns=['ip.tos', 'tcp.options.mss_val'], inplace=True)
+    init_df.drop(columns=['ip.tos', 'tcp.options.mss_val', 'ip.opt.mtu'], inplace=True)
     # init_df['tcp.options.mss_val'].fillna(method='ffill', inplace=True)
     init_df.dropna(inplace=True)
 
@@ -160,6 +167,9 @@ def add_label(df, ip_label_dict):
 
 if __name__ == '__main__':
 
+    clf_model_dir = ".\\clf_model"
+    win_dfs, linux_dfs, mac_dfs = [], [], []
+
     for i, filename in enumerate(os.listdir(directory)):
         f = os.path.join(directory, filename)
         if os.path.isfile(f):
@@ -168,22 +178,32 @@ if __name__ == '__main__':
             processed_df = data_preprocess(df)
             labeled_df = add_label(processed_df, ip_dict)
 
-            # limit number of records
-            test_df = labeled_df[700:840] if df.shape[0] > 840 else labeled_df[700:]
-            labeled_df = labeled_df[:700] if df.shape[0] > 700 else labeled_df
-            print(labeled_df.shape[0])
-
             filename_to_miss = ""
 
             if filename == filename_to_miss:
-                labeled_df.to_csv(directory + '\\labeled_to_miss.csv', mode='a+', index=False)
-                continue
+                labeled_df.to_csv(clf_model_dir + '\\labeled_to_miss.csv', mode='a+', index=False)
 
-            elif not i:
-                labeled_df.to_csv(directory + '\\labeled.csv', mode='a+', index=False)
-                test_df.to_csv(directory + '\\test.csv', mode='a+', index=False)
+            elif 'Windows' in labeled_df['os'].values:
+                win_dfs.append(labeled_df)
+            elif 'Linux' in labeled_df['os'].values:
+                linux_dfs.append(labeled_df)
             else:
-                labeled_df.to_csv(directory + '\\labeled.csv', mode='a+', header=False, index=False)
-                test_df.to_csv(directory + '\\test.csv', mode='a+', header=False, index=False)
+                mac_dfs.append(labeled_df)
 
-    # print(labeled_df)
+    win_df = pd.concat(win_dfs, axis=0)
+    linux_df = pd.concat(linux_dfs, axis=0)
+    mac_df = pd.concat(mac_dfs, axis=0)
+
+    num_train_samples = int(min(win_df.shape[0], linux_df.shape[0], mac_df.shape[0]) * 0.8)
+
+    # shuffle the dataset to create balanced data of all os types
+    win_df = win_df.sample(frac=1).reset_index(drop=True)
+    linux_df = linux_df.sample(frac=1).reset_index(drop=True)
+    mac_df = mac_df.sample(frac=1).reset_index(drop=True)
+
+    train_set = pd.concat([win_df[:num_train_samples], linux_df[:num_train_samples], mac_df[:num_train_samples]], axis=0)
+    test_set = pd.concat([win_df[num_train_samples:], linux_df[num_train_samples:], mac_df[num_train_samples:]], axis=0)
+
+    train_set.to_csv(clf_model_dir + '\\labeled.csv', mode='a+', index=False)
+    test_set.to_csv(clf_model_dir + '\\test.csv', mode='a+', index=False)
+
