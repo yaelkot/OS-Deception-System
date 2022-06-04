@@ -140,13 +140,13 @@ if __name__ == "__main__":
 
     test_set = pd.read_csv(filename, usecols=names)
 
-    """    knn = model.KNN()
-    model.SVM('linear')
+    knn = model.KNN()
+    # model.NB()
+    # model.RF()
+    # model.ANN()
+    # model.DT()
     model.SVM('rbf')
-    model.NB()
-    model.RF()
-    model.ANN()
-    model.DT()"""
+    model.SVM('linear')
+
 
     model.run_models(test_set, x_iloc_list, y_iloc)
-    # sklearn.metrics.confusion_matrix(, user_traffic)
