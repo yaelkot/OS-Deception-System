@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="192d0e13-447d-4861-a489-70809b9fba76" name="Changes" comment="did experiment with the fields to improve accuracy">
+      <change beforePath="$PROJECT_DIR$/.idea/OS-Deception-System.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/OS-Deception-System.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ML_Models_Structure.py" beforeDir="false" afterPath="$PROJECT_DIR$/ML_Models_Structure.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/ann.sav" beforeDir="false" afterPath="$PROJECT_DIR$/model/ann.sav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/dt.sav" beforeDir="false" afterPath="$PROJECT_DIR$/model/dt.sav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/nb.sav" beforeDir="false" afterPath="$PROJECT_DIR$/model/nb.sav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/rf.sav" beforeDir="false" afterPath="$PROJECT_DIR$/model/rf.sav" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Merge.Settings">
+    <option name="BRANCH" value="main" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="27HDDWpm6rQWlCa2AlXDNjgQEhh" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\yael6\PycharmProjects\OS-Detection-System\real-traffic" />
+      <recent name="C:\Users\yael6\PycharmProjects\OS-Detection-System\dataset" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.main">
+    <configuration name="feature_labeling" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\yael6\AppData\Local\Programs\Python\Python37\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/feature_labeling.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="feature_visualization" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="OS-Detection-System" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/feature_visualization.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\yael6\AppData\Local\Programs\Python\Python37\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.main" />
+        <item itemvalue="Python.feature_labeling" />
+        <item itemvalue="Python.feature_visualization" />
+        <item itemvalue="Python.feature_labeling" />
+        <item itemvalue="Python.main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="192d0e13-447d-4861-a489-70809b9fba76" name="Changes" comment="" />
+      <created>1648967999123</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1648967999123</updated>
+      <workItem from="1648968000749" duration="3047000" />
+      <workItem from="1649264987302" duration="583000" />
+      <workItem from="1649692713801" duration="12073000" />
+      <workItem from="1650704434422" duration="1796000" />
+      <workItem from="1651311984116" duration="35930000" />
+      <workItem from="1651561187219" duration="120000" />
+      <workItem from="1652090011262" duration="2932000" />
+      <workItem from="1652275612409" duration="5701000" />
+      <workItem from="1652691166688" duration="9983000" />
+      <workItem from="1652806970751" duration="1766000" />
+      <workItem from="1652947485261" duration="1052000" />
+      <workItem from="1653892870010" duration="89000" />
+      <workItem from="1654081310164" duration="7269000" />
+      <workItem from="1654094780769" duration="4793000" />
+      <workItem from="1654101591469" duration="3043000" />
+      <workItem from="1654258275242" duration="4891000" />
+      <workItem from="1654333490957" duration="3513000" />
+    </task>
+    <task id="LOCAL-00001" summary="did graphs">
+      <created>1651314285485</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1651314285485</updated>
+    </task>
+    <task id="LOCAL-00002" summary="trarin modles on new labeled csv with the field '&#10;tcp.time_delta">
+      <created>1651481106806</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1651481106806</updated>
+    </task>
+    <task id="LOCAL-00003" summary="continue train models on new labeled csv with the field&#10;tcp.time_delta">
+      <created>1651490023476</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1651490023476</updated>
+    </task>
+    <task id="LOCAL-00004" summary="continue train models on new labeled csv with different datasets as test">
+      <created>1652125421236</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1652125421236</updated>
+    </task>
+    <task id="LOCAL-00005" summary="order classes">
+      <created>1652693201736</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1652693201736</updated>
+    </task>
+    <task id="LOCAL-00006" summary="did experiment with the fields to improve accuracy">
+      <created>1652812365047</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1652812365047</updated>
+    </task>
+    <task id="LOCAL-00007" summary="did experiment with the fields to improve accuracy">
+      <created>1652815683526</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1652815683526</updated>
+    </task>
+    <task id="LOCAL-00008" summary="train models on the real traffic + csv and did confution matrix">
+      <created>1654201257027</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1654201257027</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/YaelBranch" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="did graphs" />
+    <MESSAGE value="trarin modles on new labeled csv with the field '&#10;tcp.time_delta" />
+    <MESSAGE value="continue train models on new labeled csv with the field&#10;tcp.time_delta" />
+    <MESSAGE value="continue train models on new labeled csv with different datasets as test" />
+    <MESSAGE value="order classes" />
+    <MESSAGE value="did experiment with the fields to improve accuracy" />
+    <MESSAGE value="train models on the real traffic + csv and did confution matrix" />
+    <option name="LAST_COMMIT_MESSAGE" value="train models on the real traffic + csv and did confution matrix" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/ML_Models_Structure.py</url>
+          <line>201</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/OS_Detection_System$feature_labeling.coverage" NAME="feature_labeling Coverage Results" MODIFIED="1654196636757" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/OS_Detection_System$main.coverage" NAME="main Coverage Results" MODIFIED="1654337560074" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+  </component>
+</project>

@@ -1,5 +1,3 @@
-# Modified from source: https://machinelearningmastery.com/feature-selection-machine-learning-python/
-
 # Feature Selection with Univariate Statistical Tests
 import pandas as pd
 from pandas import read_csv

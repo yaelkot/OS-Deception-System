@@ -107,10 +107,9 @@ class ClassifierModel:
         # print('Classification Report: ')
         # print(classification_report(self.y_test, y_pred), '\n')
         # print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
-
         # self.classification_report_plot(classification_report(self.y_test, y_pred, output_dict=True), "ANN")
 
-    def SVM(self, kernel_type = "linear"):
+    def SVM(self, kernel_type="linear"):
         SVM_Classifier = SVC()
         SVM_Classifier.fit(self.X, self.Y)
         joblib.dump(SVM_Classifier, "model/svm" + kernel_type + '.sav')
@@ -121,7 +120,6 @@ class ClassifierModel:
         # print('Classification Report: ')
         # print(classification_report(self.y_test, y_pred), '\n')
         # print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
-        #
         #
         # self.classification_report_plot(classification_report(self.y_test, y_pred, output_dict=True), "SVM" + kernel_type)
 
@@ -136,9 +134,9 @@ class ClassifierModel:
         # print('Classification Report: ')
         # p = classification_report(self.y_test, y_pred)
         # print(p, '\n')
-        # # print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
-        #
-        #
+        # print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
+
+
         # self.classification_report_plot(classification_report(self.y_test, y_pred, output_dict=True), "RF")
 
     def NB(self):
@@ -146,7 +144,7 @@ class ClassifierModel:
         NB_Classifier.fit(self.X, self.Y)
         joblib.dump(NB_Classifier, "model/nb.sav")
         # y_pred = NB_Classifier.predict(self.X_test)
-        #
+
         print("\n")
         print("************************* Naive Bayes Classifier *************************\n")
         # print('Classification Report: ')
@@ -162,14 +160,14 @@ class ClassifierModel:
         KNN_Classifier.fit(self.X, self.Y)
         joblib.dump(KNN_Classifier, "model/knn.sav")
         # y_pred = KNN_Classifier.predict(self.X_test)
-        #
+
         print("\n")
         print("************************* K-Neighbors Classifier *************************\n")
         # print('Classification Report: ')
         # print(classification_report(self.y_test, y_pred), '\n')
         # print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
-        #
-        #
+
+
         # self.classification_report_plot(classification_report(self.y_test, y_pred,output_dict=True), "KNN")
 
     def DT(self):
@@ -177,14 +175,14 @@ class ClassifierModel:
         DT_Classifier.fit(self.X, self.Y)
         joblib.dump(DT_Classifier, "model/dt.sav")
         # y_pred = DT_Classifier.predict(self.X_test)
-        #
+
         print("\n")
         print("************************* Decision Tree Classifier *************************\n")
         # print('Classification Report: ')
         # print(classification_report(self.y_test, y_pred), '\n')
         # print('Precision: ', self.accuracy(confusion_matrix(self.y_test, y_pred)) * 100, '%')
-        #
-        #
+
+
         # self.classification_report_plot(classification_report(self.y_test, y_pred,output_dict=True), "DT")
 
     def models_summery(self):
@@ -200,6 +198,7 @@ class ClassifierModel:
         sns.heatmap(accuracies, annot=True, cmap="BuPu")
         fig.savefig(out_file_name, bbox_inches="tight")
 
+
     def run_models(self, dataset, x_iloc_list, os_loc):
 
         X = dataset.iloc[:, x_iloc_list].values
@@ -214,4 +213,6 @@ class ClassifierModel:
             print("******************\n")
             self.confusion_matrix_report_plot(loaded_model, filename, X, Y, "experiment_1_all_os_types")
 
-
+            result = loaded_model.score(X, Y)
+            print(result)
+            print("******************\n")
