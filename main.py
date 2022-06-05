@@ -114,7 +114,7 @@ def option_check():
 
 if __name__ == "__main__":
 
-    filename = ".\\real-traffic\\labeled.csv"
+    filename = ".\\clf_model\\labeled.csv"
 
     # names = ['ip.flags.df', 'ip.ttl', 'ip.len', 'tcp.srcport',
     #          'tcp.dstport', 'tcp.seq', 'tcp.ack', 'tcp.len',
@@ -136,17 +136,18 @@ if __name__ == "__main__":
 
     model = ClassifierModel(labeled_df, x_iloc_list, y_iloc)
 
-    filename = "real-traffic\\test.csv"
+    filename = "clf_model\\test.csv"
 
     test_set = pd.read_csv(filename, usecols=names)
 
-    knn = model.KNN()
+    # model.KNN()
     # model.NB()
     # model.RF()
     # model.ANN()
     # model.DT()
-    model.SVM('rbf')
-    model.SVM('linear')
+    # not include them
+    # model.SVM('rbf')
+    # model.SVM('linear')
 
 
     model.run_models(test_set, x_iloc_list, y_iloc)
