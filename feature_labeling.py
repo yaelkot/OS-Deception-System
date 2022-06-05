@@ -194,7 +194,7 @@ if __name__ == '__main__':
             filename_to_miss = ""
 
             if filename == filename_to_miss:
-                labeled_df.to_csv(clf_model_dir + '\\labeled_to_miss.csv', mode='a+', index=False)
+                labeled_df.to_csv(clf_model_dir + '\\labeled_to_miss.csv', mode='w', index=False)
 
             elif 'Windows' in labeled_df['os'].values:
                 win_dfs.append(labeled_df)
@@ -217,6 +217,6 @@ if __name__ == '__main__':
     train_set = pd.concat([win_df[:num_train_samples], linux_df[:num_train_samples], mac_df[:num_train_samples]], axis=0)
     test_set = pd.concat([win_df[num_train_samples:], linux_df[num_train_samples:], mac_df[num_train_samples:]], axis=0)
 
-    train_set.to_csv(clf_model_dir + '\\labeled.csv', mode='a+', index=False)
-    test_set.to_csv(clf_model_dir + '\\test.csv', mode='a+', index=False)
+    train_set.to_csv(clf_model_dir + '\\labeled.csv', mode='w', index=False)
+    test_set.to_csv(clf_model_dir + '\\test.csv', mode='w', index=False)
 
