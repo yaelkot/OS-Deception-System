@@ -194,7 +194,7 @@ if __name__ == '__main__':
             filename_to_miss = ""
 
             if filename == filename_to_miss:
-                labeled_df.to_csv(clf_model_dir + '\\labeled_to_miss.csv', mode='a+', index=False)
+                labeled_df.to_csv(clf_model_dir + '\\labeled_to_miss.csv', mode='w', index=False)
 
             elif 'Windows' in labeled_df['os'].values:
                 win_dfs.append(labeled_df)
