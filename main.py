@@ -140,7 +140,7 @@ if __name__ == "__main__":
 
     test_set = pd.read_csv(filename, usecols=names)
 
-    knn = model.KNN()
+    model.KNN()
     # model.NB()
     # model.RF()
     # model.ANN()

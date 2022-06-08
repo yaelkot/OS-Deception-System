@@ -78,7 +78,7 @@ class ClassifierModel:
 
         out_file_name = folder + "/" + filename + ".png"
         matrix = plot_confusion_matrix(loaded_model, X, Y, labels=['Windows', 'Linux', 'Mac'],
-                                       values_format='.2%', normalize='true')
+                                       values_format='.2%', normalize='true',  cmap=plt.cm.Blues)
         title = 'Confusion Matrix ' + filename.upper() + '\n' + experiment_alias
         matrix.ax_.set_title(title, color='Black')
         plt.xlabel('Predicted Label', color='Black')
@@ -200,6 +200,7 @@ class ClassifierModel:
 
 
     def run_models(self, dataset, x_iloc_list, os_loc):
+        # dataset = dataset.drop(columns=['ip.flags.df'])
 
         X = dataset.iloc[:, x_iloc_list].values
         Y = dataset.iloc[:, os_loc].values
