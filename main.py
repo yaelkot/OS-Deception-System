@@ -1,16 +1,8 @@
-### Example Inputs ###
-# python main.py -file thursday-100M-v2.csv -features 4,5,6,8,20,22,23,24,25,26,27,29 -label 32 -test 0.2
-# python main.py -file thursday-100M-v2.csv -features 1,5,8,13,17,18,19,20,22,23,24,25,26,29 -label 32 -test 0.2
-### End ###
 
 
 import pandas as pd
 import sys
-
-import sklearn
-
 from ML_Models_Structure import ClassifierModel
-from traffic_data_preprocess import data_preprocess, add_label
 
 
 # Consider all Linux versions as Linux
@@ -148,6 +140,6 @@ if __name__ == "__main__":
     # not include them
     # model.SVM('rbf')
     # model.SVM('linear')
+    # model.XGBOOST()
 
-
-    model.run_models(test_set, x_iloc_list, y_iloc)
+    model.run_models(test_set, x_iloc_list, y_iloc, names)
